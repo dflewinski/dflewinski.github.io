@@ -1,7 +1,7 @@
 //wczytywanie danych
 var map = L.map('mapid').setView([54.186, 18.031],7);
 
-map.options.minZoom = 9;
+map.options.minZoom = 4;
 map.options.maxZoom = 11;
 
 var info = L.control();
