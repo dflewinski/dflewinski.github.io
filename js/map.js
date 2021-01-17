@@ -8,13 +8,14 @@ var info = L.control();
 
 info.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this._div.id = 'infobox'
     this.update();
     return this._div;
 };
 
 info.update = function (props) {
     this._div.innerHTML = '<h4>Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4>' +
-        '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> za pomocą wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>'
+        '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>'
     this._div.innerHTML +=
         '<div>Źródła:</div>'
         + '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>'
@@ -366,7 +367,7 @@ var baseMaps = {
 var overlayMaps = {};
 
 L.control.layers(baseMaps, overlayMaps, {
-    collapsed: false,
+    collapsed: true,
     position: 'topright'
 }).addTo(map);
 

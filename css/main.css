@@ -196,8 +196,6 @@ body {
 }
 
 .info {
-  /*max-width: 80%;*/
-
   padding: 6px 8px;
   font: 14px/16px Arial, Helvetica, sans-serif;
   background: white;
@@ -232,4 +230,8 @@ body {
   display: block;
   overflow: hidden;
   background-color: #f1f1f1;
+}
+
+#infobox{
+  max-width: calc(100% - 80px);
 }
