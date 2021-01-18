@@ -10,7 +10,7 @@ map.options.wheelPxPerZoomLevel = 200;
 var info = L.control();
 
 function infoDescriptionOnCreate (){
-    return '<button class="collapsible"><h4 style="display:inline-block">Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4></button>' +
+    return '<button class="collapsible"><div><h4 style="width: 100%;">Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4></div></button>' +
         '<div class="content">' +
         '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>' +
         '<div>Źródła:</div>' +
@@ -21,7 +21,7 @@ function infoDescriptionOnCreate (){
 info.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
     this._div.id = 'infobox';
-    this._div.innerHTML = infoDescriptionOnCreate()
+    this._div.innerHTML = infoDescriptionOnCreate();
     return this._div;
 };
 
@@ -36,12 +36,14 @@ var colli;
 
 for (colli = 0; colli < coll.length; colli++) {
     coll[colli].addEventListener("click", function () {
-        this.classList.toggle("active");
+
         var content = this.nextElementSibling;
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
+            this.classList.toggle("active");
         } else {
             content.style.maxHeight = content.scrollHeight + "px";
+            this.classList.toggle("active");
         }
     });
 }
