@@ -12,6 +12,7 @@ var info = L.control();
 function infoDescriptionOnCreate (){
     return '<button class="collapsible"><div><h4 style="width: 100%;">Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4></div></button>' +
         '<div class="content">' +
+        '<p>Nie zawiera kosztów ponoszonych przez powiaty (np. szkoły średnie).</p>' +
         '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
@@ -70,6 +71,9 @@ var SUBVENTION = L.geoJson(gminyData, {style: styleSubvention, onEachFeature: SU
 
 //kolory do skal
 function getColorByCost(d) {
+    // var mapscale = chroma.scale(['green', 'red']).domain([1, 1200001], 8, 'log');
+    // return d > 1 ? mapscale(d)  :
+    //                                 LEGENDPALETTE8[8];
     return d > 1200000 ? LEGENDPALETTE8[0] :
         d > 1000000 ? LEGENDPALETTE8[1] :
             d > 800000 ? LEGENDPALETTE8[2] :
@@ -93,6 +97,9 @@ function styleCost(feature) {
 }
 
 function getColorByPerCitizen(d) {
+    // var mapscale = chroma.scale(['lime', 'red']).domain([1, 71], 8, 'log');
+    // return d >= 1 ? mapscale(d) :
+    //                                 LEGENDPALETTE8[8];
     return d > 70 ? LEGENDPALETTE8[0] :
         d > 60 ? LEGENDPALETTE8[1] :
             d > 50 ? LEGENDPALETTE8[2] :
@@ -180,6 +187,9 @@ function styleStatus(feature) {
 }
 
 function getColorByPerStudent(d) {
+    // var mapscale = chroma.scale(['lime', '#ff0000']).domain([1, 801]);
+    // return d>1 ? mapscale(d) :
+    //                                 LEGENDPALETTE8[8];
     return d > 800 ? LEGENDPALETTE8[0] :
         d > 700 ? LEGENDPALETTE8[1] :
             d > 600 ? LEGENDPALETTE8[2] :
