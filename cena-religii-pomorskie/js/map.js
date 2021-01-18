@@ -1,27 +1,50 @@
 //wczytywanie danych
-var map = L.map('mapid').setView([54.186, 18.031],7);
+var map = L.map('mapid').setView([54.186, 18.031], 7);
 
 map.options.minZoom = 4;
-map.options.maxZoom = 11;
+map.options.maxZoom = 10.5;
+map.options.zoomSnap = 0.30;
+map.options.zoomDelta = 0.30;
+map.options.wheelPxPerZoomLevel = 200;
 
 var info = L.control();
 
+function infoDescriptionOnCreate (){
+    return '<button class="collapsible"><h4 style="display:inline-block">Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4></button>' +
+        '<div class="content">' +
+        '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>' +
+        '<div>Źródła:</div>' +
+        '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
+        '</div>';
+}
+
 info.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-    this._div.id = 'infobox'
-    this.update();
+    this._div.id = 'infobox';
+    this._div.innerHTML = infoDescriptionOnCreate()
     return this._div;
 };
 
 info.update = function (props) {
-    this._div.innerHTML = '<h4>Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4>' +
-        '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>'
-    this._div.innerHTML +=
-        '<div>Źródła:</div>'
-        + '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>'
+
 };
 
 info.addTo(map);
+
+var coll = document.getElementsByClassName("collapsible");
+var colli;
+
+for (colli = 0; colli < coll.length; colli++) {
+    coll[colli].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+    });
+}
 
 //replace hardcoded colors by table
 var LEGENDPALETTE8 = [
@@ -36,9 +59,9 @@ var LEGENDPALETTE8 = [
     '#151212'
 ]
 
-var STATUS = L.geoJson(gminyData, {style: styleStatus, onEachFeature: STATUSonEachFeature}).addTo(map);
-var PERSTUDENT = L.geoJson(gminyData, {style: stylePerStudent, onEachFeature: PERSTUDENTonEachFeature});
+var STATUS = L.geoJson(gminyData, {style: styleStatus, onEachFeature: STATUSonEachFeature});
 var COST = L.geoJson(gminyData, {style: styleCost, onEachFeature: COSTonEachFeature});
+var PERSTUDENT = L.geoJson(gminyData, {style: stylePerStudent, onEachFeature: PERSTUDENTonEachFeature}).addTo(map);
 var PERCITIZEN = L.geoJson(gminyData, {style: stylePerCitizen, onEachFeature: PERCITIZENonEachFeature});
 var GMINACOST = L.geoJson(gminyData, {style: styleGminaCost, onEachFeature: GMINACOSTonEachFeature});
 var SUBVENTION = L.geoJson(gminyData, {style: styleSubvention, onEachFeature: SUBVENTIONonEachFeature});
@@ -228,14 +251,14 @@ COSTlegend.onAdd = function (map) {
             51,
             0],
         labels = [
-            '> 1.200.000 zł',
-            '1.200.000 - 1.000.000 zł',
-            '1.000.000 - 800.000 zł',
-            '800.000 - 600.000 zł',
-            '600.000 - 400.000 zł',
-            '400.000 - 200.000 zł',
-            '200.000 - 100.000 zł',
-            '< 100.000 zł',
+            '> 1 200 000 zł',
+            '1 200 000 - 1 000 000 zł',
+            '1 000 000 - 800 000 zł',
+            '800 000 - 600 000 zł',
+            '600 000 - 400 000 zł',
+            '400 000 - 200 000 zł',
+            '200 000 - 100 000 zł',
+            '< 100 000 zł',
             'Brak danych'];
 
     div.innerHTML += '<div><b>Roczne wydatki na katechezę</b></div><br>'
@@ -360,8 +383,8 @@ var baseMaps = {
     "Koszt bezwzględny": COST,
     "Koszt na ucznia": PERSTUDENT,
     "Koszt na mieszkańca": PERCITIZEN,
-    "Koszt gminy" : GMINACOST,
-    "Wysokość subwencji" : SUBVENTION
+    "Koszt gminy": GMINACOST,
+    "Wysokość subwencji": SUBVENTION
 };
 
 var overlayMaps = {};
@@ -371,8 +394,8 @@ L.control.layers(baseMaps, overlayMaps, {
     position: 'topright'
 }).addTo(map);
 
-STATUSlegend.addTo(map);
-currentLegend = STATUSlegend;
+PERSTUDENTlegend.addTo(map);
+var currentLegend = PERSTUDENTlegend;
 
 //zmiana legendy przy zminie danych
 map.on('baselayerchange', function (eventLayer) {
@@ -396,7 +419,7 @@ map.on('baselayerchange', function (eventLayer) {
         map.removeControl(currentLegend);
         currentLegend = GMINACOSTlegend;
         GMINACOSTlegend.addTo(map);
-    }else if (eventLayer.name === 'Wysokość subwencji') {
+    } else if (eventLayer.name === 'Wysokość subwencji') {
         map.removeControl(currentLegend);
         currentLegend = SUBVENTIONlegend;
         SUBVENTIONlegend.addTo(map);
@@ -405,31 +428,30 @@ map.on('baselayerchange', function (eventLayer) {
 
 //opisy do kontrolek
 function getDescription(feature) {
-
     var content = '';
     content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>';
     if (feature.properties.price) {
-        content += '<div>Kwota przeznaczona na lekcje relgii:</div><div class="tooltip">' + parseFloat(feature.properties.price).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' zł</div>';
+        content += '<div><b>Kwota przeznaczona na lekcje relgii:</b></div><div class="tooltip">' + parseFloat(feature.properties.price).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' zł</div>';
     }
 
     if (feature.properties.populate) {
-        content += '<div>Liczba mieszkańców: ' + parseFloat(feature.properties.populate).toLocaleString(undefined) + '</div>';
+        content += '<div><b>Liczba mieszkańców: </b>' + parseFloat(feature.properties.populate).toLocaleString(undefined) + '</div>';
     }
 
     if (feature.properties.students) {
-        content += '<div>Liczba uczniów: ' + parseFloat(feature.properties.students).toLocaleString(undefined) + '</div>';
+        content += '<b><div>Liczba uczniów: </b>' + parseFloat(feature.properties.students).toLocaleString(undefined) + '</div>';
     }
 
     if (feature.properties.perCitizen) {
-        content += '<div>Kwota na mieszkańca: ' + parseFloat(feature.properties.perCitizen).toLocaleString(undefined) + ' zł/os</div>';
+        content += '<b><div>Kwota na mieszkańca: </b>' + parseFloat(feature.properties.perCitizen).toLocaleString(undefined) + ' zł/os</div>';
     }
 
     if (feature.properties.perStudent) {
-        content += '<div>Kwota na ucznia: ' + parseFloat(feature.properties.perStudent).toLocaleString(undefined) + ' zł/os</div>';
+        content += '<b><div>Kwota na ucznia: </b>' + parseFloat(feature.properties.perStudent).toLocaleString(undefined) + ' zł/os</div>';
     }
 
     if (feature.properties.description) {
-        content += '<br><div>Uwaga:</div><div class="tooltip">' + feature.properties.description + '</div><br>';
+        content += '<br><div><b>Uwaga:</b></div><div class="tooltip">' + feature.properties.description + '</div><br>';
     }
 
     return content;
@@ -441,18 +463,18 @@ function getDescriptionPopup(feature) {
 
     if (feature.properties.subvention) {
         if (feature.properties.subvention !== " ") {
-            content += '<div>Kwota subwencji oświatowej: ' + parseFloat(feature.properties.subvention).toLocaleString(undefined) + ' zł</div>';
+            content += '<div><b>Kwota subwencji oświatowej: </b>' + parseFloat(feature.properties.subvention).toLocaleString(undefined) + ' zł</div>';
         }
     }
 
     if (feature.properties.gminaCost) {
         if (feature.properties.gminaCost !== " ") {
-            content += '<div>Kwota z samorządu: ' + parseFloat(feature.properties.gminaCost).toLocaleString(undefined) + ' zł</div>';
+            content += '<div><b>Kwota z samorządu: </b>' + parseFloat(feature.properties.gminaCost).toLocaleString(undefined) + ' zł</div>';
         }
     }
 
     if (feature.properties.link.length > 0) {
-        content += '<br><div>Źródła:</div>';
+        content += '<br><div><b>Źródła:</b></div>';
         for (let j = 0; j < feature.properties.link.length; j++) {
             content += '<div class="tooltip"><a href="' + feature.properties.link[j] + '">' + feature.properties.link[j] + '</a><div/><br>';
         }
@@ -637,10 +659,12 @@ function SUBVENTIONonEachFeature(feature, layer) {
 }
 
 L.tileLayer('', {
-    attribution: '<a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a>. <a href="">Wykonał DFL</a> ',
+    attribution: '<a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a>. <a href="https://www.paypal.com/paypalme/dflewinski">Wykonał DFL</a> ',
 }).addTo(map);
-
-
 
 //resize the geojson view to bounds
 map.fitBounds(STATUS.getBounds());
+
+L.easyButton("fas fa-expand", function(){
+    map.fitBounds(STATUS.getBounds());
+}).addTo(map);
