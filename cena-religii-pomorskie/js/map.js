@@ -7,16 +7,24 @@ map.options.zoomSnap = 0.30;
 map.options.zoomDelta = 0.30;
 map.options.wheelPxPerZoomLevel = 200;
 
+$(function () {
+    $("#accordion").accordion({
+        collapsible: true,
+        active: false
+    });
+});
+
 var info = L.control();
 
-function infoDescriptionOnCreate (){
-    return '<button class="collapsible"><div><h4 style="width: 100%;">Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4></div></button>' +
-        '<div class="content">' +
+function infoDescriptionOnCreate() {
+    return '<div id="accordion">\n' +
+        '  <h4 style="font-weight: bold">Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4>' +
+        '  <div>' +
         '<p>Nie zawiera kosztów ponoszonych przez powiaty (np. szkoły średnie).</p>' +
         '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
-        '</div>';
+        '</div>'
 }
 
 info.onAdd = function (map) {
@@ -31,23 +39,6 @@ info.update = function (props) {
 };
 
 info.addTo(map);
-
-var coll = document.getElementsByClassName("collapsible");
-var colli;
-
-for (colli = 0; colli < coll.length; colli++) {
-    coll[colli].addEventListener("click", function () {
-
-        var content = this.nextElementSibling;
-        if (content.style.maxHeight) {
-            content.style.maxHeight = null;
-            this.classList.toggle("active");
-        } else {
-            content.style.maxHeight = content.scrollHeight + "px";
-            this.classList.toggle("active");
-        }
-    });
-}
 
 //replace hardcoded colors by table
 var LEGENDPALETTE8 = [
@@ -677,6 +668,6 @@ L.tileLayer('', {
 //resize the geojson view to bounds
 map.fitBounds(STATUS.getBounds());
 
-L.easyButton("fas fa-expand", function(){
+L.easyButton("fas fa-expand", function () {
     map.fitBounds(STATUS.getBounds());
 }).addTo(map);
