@@ -486,7 +486,8 @@ function getDescriptionPopup(feature) {
     return content;
 }
 
-//zachowanie tooltipa
+var temppopup = 0;
+
 function STATUSonEachFeature(feature, layer) {
     layer.bindPopup(getDescriptionPopup(feature));
     layer.bindTooltip(getDescription(feature));
@@ -504,6 +505,17 @@ function STATUSonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
+        if(temppopup!==0){
+            layer.closeTooltip();
+        }
+    });
+
+    layer.on('popupopen',function (f,l){
+        temppopup = 1;
+    });
+
+    layer.on('popupclose',function (f,l){
+        temppopup = 0;
     });
 
     layer.on('mouseout', function (f, l) {
@@ -533,6 +545,17 @@ function PERSTUDENTonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
+        if(temppopup!==0){
+            layer.closeTooltip();
+        }
+    });
+
+    layer.on('popupopen',function (f,l){
+        temppopup = 1;
+    });
+
+    layer.on('popupclose',function (f,l){
+        temppopup = 0;
     });
 
     layer.on('mouseout', function (f, l) {
@@ -562,6 +585,17 @@ function PERCITIZENonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
+        if(temppopup!==0){
+            layer.closeTooltip();
+        }
+    });
+
+    layer.on('popupopen',function (f,l){
+        temppopup = 1;
+    });
+
+    layer.on('popupclose',function (f,l){
+        temppopup = 0;
     });
 
     layer.on('mouseout', function (f, l) {
@@ -591,6 +625,17 @@ function COSTonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
+        if(temppopup!==0){
+            layer.closeTooltip();
+        }
+    });
+
+    layer.on('popupopen',function (f,l){
+        temppopup = 1;
+    });
+
+    layer.on('popupclose',function (f,l){
+        temppopup = 0;
     });
 
     layer.on('mouseout', function (f, l) {
@@ -620,6 +665,17 @@ function POWIATCOSTonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
+        if(temppopup!==0){
+            layer.closeTooltip();
+        }
+    });
+
+    layer.on('popupopen',function (f,l){
+        temppopup = 1;
+    });
+
+    layer.on('popupclose',function (f,l){
+        temppopup = 0;
     });
 
     layer.on('mouseout', function (f, l) {
@@ -649,6 +705,17 @@ function SUBVENTIONonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
+        if(temppopup!==0){
+            layer.closeTooltip();
+        }
+    });
+
+    layer.on('popupopen',function (f,l){
+        temppopup = 1;
+    });
+
+    layer.on('popupclose',function (f,l){
+        temppopup = 0;
     });
 
     layer.on('mouseout', function (f, l) {
