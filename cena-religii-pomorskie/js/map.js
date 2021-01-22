@@ -233,9 +233,14 @@ PERSTUDENTlegend.onAdd = function (map) {
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColorByPerStudent(grades[i]) + '"></i> ' +
-            labels[i] + '<br>';
+        var idom = document.createElement("i");
+        idom.style.background = getColorByPerStudent(grades[i]);
+        div.appendChild(idom);
+        div.innerHTML += labels[i] +'<br>';
+
+        // div.innerHTML +=
+        //     '<i style="background:' + getColorByPerStudent(grades[i]) + '"></i> ' +
+        //     labels[i] + '<br>';
     }
     return div;
 };
@@ -730,7 +735,7 @@ function SUBVENTIONonEachFeature(feature, layer) {
 }
 
 L.tileLayer('', {
-    attribution: '<a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a>. <a href="https://www.paypal.com/paypalme/dflewinski">Wykonał DFL</a> ',
+    attribution: '<a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a>. <a href="https://www.paypal.com/paypalme/dflewinski">Wizualizacja - DFL</a> ',
 }).addTo(map);
 
 //resize the geojson view to bounds
