@@ -122,6 +122,7 @@ function getColorByGminaCost(d) {
                         d > 20000 ? LEGENDPALETTE8[5] :
                             d > 0 ? LEGENDPALETTE8[6] :
                                 d === ' ' ? LEGENDPALETTE8[8] :
+                                d === null ? LEGENDPALETTE8[8] :
                                     '#3cc31f'; //vhen value is 0
 }
 
@@ -145,6 +146,7 @@ function getColorBySubvention(d) {
                         d > 200000 ? LEGENDPALETTE8[5] :
                             d > 0 ? LEGENDPALETTE8[6] :
                                 d === ' ' ? LEGENDPALETTE8[8] :
+                                d === null ? LEGENDPALETTE8[8] :
                                     '#3cc31f'; //when value is 0
 }
 
