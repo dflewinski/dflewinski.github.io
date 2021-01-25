@@ -18,10 +18,10 @@ var info = L.control();
 
 function infoDescriptionOnCreate() {
     return '<div id="accordion">\n' +
-        '  <h4 style="font-weight: bold">Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4>' +
+        '  <h4 style="font-weight: bold">'+ infoText.title +'</h4>' +
         '  <div>' +
-        '<p>Obejmuje głównie szkoły podstawowe i przedszkola. Nie zawiera kosztów ponoszonych przez powiaty (np. większość szkół średnich).</p>' +
-        '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>' +
+        '<p>'+ infoText.content +'</p>' +
+        '<p>'+ infoText.dataSource +'</p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
         '</div>'
@@ -39,19 +39,6 @@ info.update = function (props) {
 };
 
 info.addTo(map);
-
-//replace hardcoded colors by table
-var LEGENDPALETTE8 = [
-    '#53000b',
-    '#99000d',
-    '#cb181d',
-    '#ef3b2c',
-    '#fb6a4a',
-    '#fc9272',
-    '#fcbba1',
-    '#fee0d2',
-    '#151212'
-]
 
 var STATUS = L.geoJson(gminyData, {style: styleStatus, onEachFeature: STATUSonEachFeature});
 var COST = L.geoJson(gminyData, {style: styleCost, onEachFeature: COSTonEachFeature});
@@ -88,9 +75,6 @@ function styleCost(feature) {
 }
 
 function getColorByPerCitizen(d) {
-    // var mapscale = chroma.scale(['lime', 'red']).domain([1, 71], 8, 'log');
-    // return d >= 1 ? mapscale(d) :
-    //                                 LEGENDPALETTE8[8];
     return d > 70 ? LEGENDPALETTE8[0] :
         d > 60 ? LEGENDPALETTE8[1] :
             d > 50 ? LEGENDPALETTE8[2] :
@@ -162,10 +146,10 @@ function styleSubvention(feature) {
 }
 
 function getColorByStatus(d) {
-    return d == 1 ? '#FFEDA0' :
-        d == 2 ? '#484040' :
-            d == 3 ? '#49914e' :
-                '#ff0000';
+    return d == 1 ? STATUSPALETTE4[1] :
+        d == 2 ? STATUSPALETTE4[2] :
+            d == 3 ? STATUSPALETTE4[3] :
+                STATUSPALETTE4[0];
 }
 
 function styleStatus(feature) {
@@ -180,9 +164,6 @@ function styleStatus(feature) {
 }
 
 function getColorByPerStudent(d) {
-    // var mapscale = chroma.scale(['lime', '#ff0000']).domain([1, 801]);
-    // return d>1 ? mapscale(d) :
-    //                                 LEGENDPALETTE8[8];
     return d > 800 ? LEGENDPALETTE8[0] :
         d > 700 ? LEGENDPALETTE8[1] :
             d > 600 ? LEGENDPALETTE8[2] :
@@ -239,10 +220,6 @@ PERSTUDENTlegend.onAdd = function (map) {
         idom.style.background = getColorByPerStudent(grades[i]);
         div.appendChild(idom);
         div.innerHTML += labels[i] +'<br>';
-
-        // div.innerHTML +=
-        //     '<i style="background:' + getColorByPerStudent(grades[i]) + '"></i> ' +
-        //     labels[i] + '<br>';
     }
     return div;
 };
@@ -318,7 +295,7 @@ PERCITIZENlegend.onAdd = function (map) {
 };
 
 var GMINACOSTlegend = L.control({position: 'bottomright'});
-GMINACOSTlegend.onAdd = function (map) { //fixme
+GMINACOSTlegend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [
             120001,
@@ -353,7 +330,7 @@ GMINACOSTlegend.onAdd = function (map) { //fixme
 };
 
 var SUBVENTIONlegend = L.control({position: 'bottomright'});
-SUBVENTIONlegend.onAdd = function (map) { //fixme
+SUBVENTIONlegend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [
             1200001,
@@ -499,12 +476,7 @@ function STATUSonEachFeature(feature, layer) {
     layer.bindTooltip(getDescription(feature));
 
     layer.on('mouseover', function (f, l) {
-        layer.setStyle({
-            weight: 5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        layer.setStyle(hoverStyle);
         if (layer.isPopupOpen()) {
             layer.closeTooltip();
         }
@@ -539,12 +511,7 @@ function PERSTUDENTonEachFeature(feature, layer) {
     layer.bindTooltip(getDescription(feature));
 
     layer.on('mouseover', function (f, l) {
-        layer.setStyle({
-            weight: 5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        layer.setStyle(hoverStyle);
         if (layer.isPopupOpen()) {
             layer.closeTooltip();
         }
@@ -579,12 +546,7 @@ function PERCITIZENonEachFeature(feature, layer) {
     layer.bindTooltip(getDescription(feature));
 
     layer.on('mouseover', function (f, l) {
-        layer.setStyle({
-            weight: 5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        layer.setStyle(hoverStyle);
         if (layer.isPopupOpen()) {
             layer.closeTooltip();
         }
@@ -619,12 +581,7 @@ function COSTonEachFeature(feature, layer) {
     layer.bindTooltip(getDescription(feature));
 
     layer.on('mouseover', function (f, l) {
-        layer.setStyle({
-            weight: 5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        layer.setStyle(hoverStyle);
         if (layer.isPopupOpen()) {
             layer.closeTooltip();
         }
@@ -659,12 +616,7 @@ function GMINACOSTonEachFeature(feature, layer) {
     layer.bindTooltip(getDescription(feature));
 
     layer.on('mouseover', function (f, l) {
-        layer.setStyle({
-            weight: 5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        layer.setStyle(hoverStyle);
         if (layer.isPopupOpen()) {
             layer.closeTooltip();
         }
@@ -699,12 +651,7 @@ function SUBVENTIONonEachFeature(feature, layer) {
     layer.bindTooltip(getDescription(feature));
 
     layer.on('mouseover', function (f, l) {
-        layer.setStyle({
-            weight: 5,
-            color: '#666',
-            dashArray: '',
-            fillOpacity: 0.7
-        });
+        layer.setStyle(hoverStyle);
         if (layer.isPopupOpen()) {
             layer.closeTooltip();
         }
@@ -735,7 +682,7 @@ function SUBVENTIONonEachFeature(feature, layer) {
 }
 
 L.tileLayer('', {
-    attribution: '<a href="https://www.facebook.com/groups/1584850021763935/">Dane - Świecka szkoła Pomorze</a>. <a href="https://www.paypal.com/paypalme/dflewinski">Wizualizacja - DFL</a> ',
+    attribution: footerText.datasource + footerText.separator + footerText.creator,
 }).addTo(map);
 
 //resize the geojson view to bounds
