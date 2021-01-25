@@ -20,7 +20,7 @@ function infoDescriptionOnCreate() {
     return '<div id="accordion">\n' +
         '  <h4 style="font-weight: bold">Koszty lekcji religii w gminach i miastach województwa pomorskiego</h4>' +
         '  <div>' +
-        '<p>Nie zawiera kosztów ponoszonych przez powiaty (np. szkoły średnie).</p>' +
+        '<p>Obejmuje głównie szkoły podstawowe i przedszkola. Nie zawiera kosztów ponoszonych przez powiaty (np. większość szkół średnich).</p>' +
         '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
@@ -123,7 +123,7 @@ function getColorByGminaCost(d) {
                             d > 0 ? LEGENDPALETTE8[6] :
                                 d === ' ' ? LEGENDPALETTE8[8] :
                                 d === null ? LEGENDPALETTE8[8] :
-                                    '#3cc31f'; //vhen value is 0
+                                    '#3cc31f'; //when value is 0
 }
 
 function styleGminaCost(feature) {
@@ -205,7 +205,7 @@ function stylePerStudent(feature) {
     };
 }
 
-//legendy
+//legends
 var STATUSlegend = L.control({position: 'bottomright'});
 STATUSlegend.onAdd = function (map) {
 
@@ -407,7 +407,6 @@ L.control.layers(baseMaps, overlayMaps, {
 PERSTUDENTlegend.addTo(map);
 var currentLegend = PERSTUDENTlegend;
 
-//zmiana legendy przy zminie danych
 map.on('baselayerchange', function (eventLayer) {
     if (eventLayer.name === 'Status zapytań') {
         map.removeControl(currentLegend);
@@ -436,7 +435,6 @@ map.on('baselayerchange', function (eventLayer) {
     }
 })
 
-//opisy do kontrolek
 function getDescription(feature) {
     var content = '';
     content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>';
@@ -737,7 +735,7 @@ function SUBVENTIONonEachFeature(feature, layer) {
 }
 
 L.tileLayer('', {
-    attribution: '<a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a>. <a href="https://www.paypal.com/paypalme/dflewinski">Wizualizacja - DFL</a> ',
+    attribution: '<a href="https://www.facebook.com/groups/1584850021763935/">Dane - Świecka szkoła Pomorze</a>. <a href="https://www.paypal.com/paypalme/dflewinski">Wizualizacja - DFL</a> ',
 }).addTo(map);
 
 //resize the geojson view to bounds
