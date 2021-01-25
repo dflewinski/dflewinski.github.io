@@ -50,13 +50,13 @@ var LEGENDPALETTE8 = [
 ]
 
 var infoText = {
-    title: "Koszty lekcji religii w gminach i miastach województwa pomorskiego",
+    title: "Koszty lekcji religii w gminach i miastach województwa kujawsko-pomorskiego",
     content:"Obejmuje głównie szkoły podstawowe i przedszkola. Nie zawiera kosztów ponoszonych przez powiaty (np. większość szkół średnich).",
-    dataSource:'Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.'
+    dataSource:'Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/2858836657723892">Świecka szkoła Kujawsko-Pomorskie</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.'
 }
 
 var footerText = {
-    datasource:'<a href="https://www.facebook.com/groups/1584850021763935/">Dane - Świecka szkoła Pomorze</a>',
+    datasource:'<a href="https://www.facebook.com/groups/2858836657723892">Dane - Świecka szkoła Kujawsko-Pomorskie</a>',
     separator:' | ',
     creator:'<a href="https://www.paypal.com/paypalme/dflewinski">Wizualizacja - DFL</a>'
 }

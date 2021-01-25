@@ -46,6 +46,7 @@ var PERSTUDENT = L.geoJson(gminyData, {style: stylePerStudent, onEachFeature: PE
 var PERCITIZEN = L.geoJson(gminyData, {style: stylePerCitizen, onEachFeature: PERCITIZENonEachFeature});
 var GMINACOST = L.geoJson(gminyData, {style: styleGminaCost, onEachFeature: GMINACOSTonEachFeature});
 var SUBVENTION = L.geoJson(gminyData, {style: styleSubvention, onEachFeature: SUBVENTIONonEachFeature});
+// var CITIES = L.geoJson(citiesData,{}); //for labels of cities
 
 //kolory do skal
 function getColorByCost(d) {
@@ -446,22 +447,25 @@ function getDescriptionPopup(feature) {
     var content = '';
     content += getDescription(feature);
 
-    if (feature.properties.subvention) {
-        if (feature.properties.subvention !== " ") {
-            content += '<div><b>Kwota subwencji oświatowej: </b>' + parseFloat(feature.properties.subvention).toLocaleString(undefined) + ' zł</div>';
+    if((feature.properties.subvention && feature.properties.subvention !== " ") || (feature.properties.gminaCost && feature.properties.gminaCost !== " ")|| feature.properties.link.length > 0) {
+        content += '<br>';
+        if (feature.properties.subvention) {
+            if (feature.properties.subvention !== " ") {
+                content += '<div><b>Kwota subwencji oświatowej: </b>' + parseFloat(feature.properties.subvention).toLocaleString(undefined) + ' zł</div>';
+            }
         }
-    }
 
-    if (feature.properties.gminaCost) {
-        if (feature.properties.gminaCost !== " ") {
-            content += '<div><b>Kwota z samorządu: </b>' + parseFloat(feature.properties.gminaCost).toLocaleString(undefined) + ' zł</div>';
+        if (feature.properties.gminaCost) {
+            if (feature.properties.gminaCost !== " ") {
+                content += '<div><b>Kwota z samorządu: </b>' + parseFloat(feature.properties.gminaCost).toLocaleString(undefined) + ' zł</div>';
+            }
         }
-    }
 
-    if (feature.properties.link.length > 0) {
-        content += '<br><div><b>Źródła:</b></div>';
-        for (let j = 0; j < feature.properties.link.length; j++) {
-            content += '<div class="tooltip"><a href="' + feature.properties.link[j] + '">' + feature.properties.link[j] + '</a><div/><br>';
+        if (feature.properties.link.length > 0) {
+            content += '<br><div><b>Źródła:</b></div>';
+            for (let j = 0; j < feature.properties.link.length; j++) {
+                content += '<div class="tooltip"><a href="' + feature.properties.link[j] + '">' + feature.properties.link[j] + '</a><div/>';
+            }
         }
     }
 
