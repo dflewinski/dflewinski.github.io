@@ -18,10 +18,10 @@ var info = L.control();
 
 function infoDescriptionOnCreate() {
     return '<div id="accordion">\n' +
-        '  <h4 style="font-weight: bold">Koszty lekcji religii w gminach i miastach województwa wielkopolskiego</h4>' +
+        '  <h4 style="font-weight: bold">Koszty lekcji religii w gminach i miastach województwa kujawsko-pomorskiego</h4>' +
         '  <div>' +
-        '<p>Nie zawiera kosztów ponoszonych przez powiaty (np. szkoły średnie).</p>' +
-        // '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>' +
+        '<p>Obejmuje głównie szkoły podstawowe i przedszkola. Nie zawiera kosztów ponoszonych przez powiaty (np. większość szkół średnich).</p>' +
+        '<p>Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/2858836657723892">Świecka szkoła Kujawsko-Pomorskie</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej.</p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
         '</div>'
@@ -122,7 +122,8 @@ function getColorByGminaCost(d) {
                         d > 20000 ? LEGENDPALETTE8[5] :
                             d > 0 ? LEGENDPALETTE8[6] :
                                 d === ' ' ? LEGENDPALETTE8[8] :
-                                    '#3cc31f'; //vhen value is 0
+                                d === null ? LEGENDPALETTE8[8] :
+                                    '#3cc31f'; //when value is 0
 }
 
 function styleGminaCost(feature) {
@@ -145,6 +146,7 @@ function getColorBySubvention(d) {
                         d > 200000 ? LEGENDPALETTE8[5] :
                             d > 0 ? LEGENDPALETTE8[6] :
                                 d === ' ' ? LEGENDPALETTE8[8] :
+                                d === null ? LEGENDPALETTE8[8] :
                                     '#3cc31f'; //when value is 0
 }
 
@@ -203,7 +205,7 @@ function stylePerStudent(feature) {
     };
 }
 
-//legendy
+//legends
 var STATUSlegend = L.control({position: 'bottomright'});
 STATUSlegend.onAdd = function (map) {
 
@@ -233,9 +235,14 @@ PERSTUDENTlegend.onAdd = function (map) {
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
-        div.innerHTML +=
-            '<i style="background:' + getColorByPerStudent(grades[i]) + '"></i> ' +
-            labels[i] + '<br>';
+        var idom = document.createElement("i");
+        idom.style.background = getColorByPerStudent(grades[i]);
+        div.appendChild(idom);
+        div.innerHTML += labels[i] +'<br>';
+
+        // div.innerHTML +=
+        //     '<i style="background:' + getColorByPerStudent(grades[i]) + '"></i> ' +
+        //     labels[i] + '<br>';
     }
     return div;
 };
@@ -311,7 +318,7 @@ PERCITIZENlegend.onAdd = function (map) {
 };
 
 var GMINACOSTlegend = L.control({position: 'bottomright'});
-GMINACOSTlegend.onAdd = function (map) {
+GMINACOSTlegend.onAdd = function (map) { //fixme
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [
             120001,
@@ -346,7 +353,7 @@ GMINACOSTlegend.onAdd = function (map) {
 };
 
 var SUBVENTIONlegend = L.control({position: 'bottomright'});
-SUBVENTIONlegend.onAdd = function (map) {
+SUBVENTIONlegend.onAdd = function (map) { //fixme
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [
             1200001,
@@ -400,7 +407,6 @@ L.control.layers(baseMaps, overlayMaps, {
 PERSTUDENTlegend.addTo(map);
 var currentLegend = PERSTUDENTlegend;
 
-//zmiana legendy przy zminie danych
 map.on('baselayerchange', function (eventLayer) {
     if (eventLayer.name === 'Status zapytań') {
         map.removeControl(currentLegend);
@@ -429,7 +435,6 @@ map.on('baselayerchange', function (eventLayer) {
     }
 })
 
-//opisy do kontrolek
 function getDescription(feature) {
     var content = '';
     content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>';
@@ -488,6 +493,7 @@ function getDescriptionPopup(feature) {
 
 var temppopup = 0;
 
+//zachowanie tooltipa
 function STATUSonEachFeature(feature, layer) {
     layer.bindPopup(getDescriptionPopup(feature));
     layer.bindTooltip(getDescription(feature));
@@ -705,15 +711,6 @@ function SUBVENTIONonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
-    });
-
-    layer.on('mouseout', function (f, l) {
-        SUBVENTION.resetStyle(layer);
-    });
-
-    layer.on('click', function (f, l) {
-        map.fitBounds(layer.getBounds());
-        layer.closeTooltip();
         if(temppopup!==0){
             layer.closeTooltip();
         }
@@ -726,17 +723,24 @@ function SUBVENTIONonEachFeature(feature, layer) {
     layer.on('popupclose',function (f,l){
         temppopup = 0;
     });
+
+    layer.on('mouseout', function (f, l) {
+        SUBVENTION.resetStyle(layer);
+    });
+
+    layer.on('click', function (f, l) {
+        map.fitBounds(layer.getBounds());
+        layer.closeTooltip();
+    });
 }
 
 L.tileLayer('', {
-    attribution: '' +
-        // '<a href="https://www.facebook.com/groups/1584850021763935/">Świecka szkoła Pomorze</a>. ' +
-        '<a href="https://www.paypal.com/paypalme/dflewinski">Wykonał DFL</a> ',
+    attribution: '<a href="https://www.facebook.com/groups/2858836657723892">Dane - Świecka szkoła Kujawsko-Pomorskie</a>. <a href="https://www.paypal.com/paypalme/dflewinski">Wizualizacja - DFL</a> ',
 }).addTo(map);
 
 //resize the geojson view to bounds
 map.fitBounds(STATUS.getBounds());
 
-L.easyButton("fas fa-expand", function(){
+L.easyButton("fas fa-expand", function () {
     map.fitBounds(STATUS.getBounds());
 }).addTo(map);
