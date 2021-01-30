@@ -10,7 +10,7 @@ var STATUSPALETTE4 = [
     '#FDDCA2',
     // '#CBCBCB',
     '#a0a0a0',
-    '#96B59A'
+    '#32b13c'
 ]
 
 // var LEGENDPALETTE8 = [
@@ -58,5 +58,5 @@ var infoText = {
 var footerText = {
     datasource:'<a href="https://www.facebook.com/groups/2858836657723892">Dane - Świecka szkoła Kujawsko-Pomorskie</a>',
     separator:' | ',
-    creator:'<a href="https://www.paypal.com/paypalme/dflewinski">Wizualizacja - DFL</a>'
+    creator:'<a href="https://www.facebook.com/profile.php?id=100000663068342">Wizualizacja - DFL</a>'
 }
