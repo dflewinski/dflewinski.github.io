@@ -40,13 +40,43 @@ info.update = function (props) {
 
 info.addTo(map);
 
+//for to create the noninteractive markers
+function MARKERpointToLayer(feature, latlng){
+    label = String(feature.properties.name) // Must convert to string, .bindTooltip can't use straight 'feature.properties.attribute'
+    return new L.CircleMarker(latlng, {
+        radius: 1,
+        stroke: false,
+        weight: 0,
+    }).bindTooltip(label, {permanent: true,
+        direction: "center",
+        className: "city-marker-label"}).openTooltip();
+}
+
+// function pointToLayer(point, latlng) {
+//     return L.marker(latlng, {interactive: false, 'icon':L.icon({
+//             iconUrl: '//leafletjs.com/docs/images/leaf-green.png',
+//             shadowUrl: '//leafletjs.com/docs/images/leaf-shadow.png',
+//             iconSize:     [38, 95], // size of the icon
+//             shadowSize:   [50, 64], // size of the shadow
+//             iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+//             shadowAnchor: [4, 62],  // the same for the shadow
+//             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+//         })});
+// }
+// function MARKERonEachFeature(feature, layer) {
+//     layer.bindTooltip(feature.properties.name, {permanent: true, className: "my-label", offset: [0, 0] });
+// }
+
 var STATUS = L.geoJson(gminyData, {style: styleStatus, onEachFeature: STATUSonEachFeature});
 var COST = L.geoJson(gminyData, {style: styleCost, onEachFeature: COSTonEachFeature});
 var PERSTUDENT = L.geoJson(gminyData, {style: stylePerStudent, onEachFeature: PERSTUDENTonEachFeature}).addTo(map);
 var PERCITIZEN = L.geoJson(gminyData, {style: stylePerCitizen, onEachFeature: PERCITIZENonEachFeature});
 var GMINACOST = L.geoJson(gminyData, {style: styleGminaCost, onEachFeature: GMINACOSTonEachFeature});
 var SUBVENTION = L.geoJson(gminyData, {style: styleSubvention, onEachFeature: SUBVENTIONonEachFeature});
-// var CITIES = L.geoJson(citiesData,{}); //for labels of cities
+// var CITIES = L.geoJson(citiesData, { pointToLayer: pointToLayer, onEachFeature: MARKERonEachFeature}).addTo(map); //for labels of cities
+var CITIES = L.geoJson(citiesData, {
+    pointToLayer:MARKERpointToLayer
+}).addTo(map); //for labels of cities
 
 //kolory do skal
 function getColorByCost(d) {
@@ -375,7 +405,9 @@ var baseMaps = {
     "Wysokość subwencji": SUBVENTION
 };
 
-var overlayMaps = {};
+var overlayMaps = {
+    "Miasta": CITIES
+};
 
 L.control.layers(baseMaps, overlayMaps, {
     collapsed: true,
