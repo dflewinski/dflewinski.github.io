@@ -426,7 +426,9 @@ function getDescription(feature) {
     }
 
     if (feature.properties.students) {
-        content += '<b><div>Liczba uczniów: </b>' + parseFloat(feature.properties.students).toLocaleString(undefined) + '</div>';
+        if (feature.properties.students > 0) {
+            content += '<b><div>Liczba uczniów: </b>' + parseFloat(feature.properties.students).toLocaleString(undefined) + '</div>';
+        }
     }
 
     if (feature.properties.perCitizen) {
