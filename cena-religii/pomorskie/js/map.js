@@ -24,6 +24,7 @@ function infoDescriptionOnCreate() {
         '<p>'+ infoText.dataSource +'</p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
+        '<div><a href="https://stat.gov.pl/obszary-tematyczne/ludnosc/ludnosc/powierzchnia-i-ludnosc-w-przekroju-terytorialnym-w-2019-roku,7,16.html">Ludność.</a></div>' +
         '</div>'
 }
 
@@ -76,7 +77,7 @@ var SUBVENTION = L.geoJson(gminyData, {style: styleSubvention, onEachFeature: SU
 // var CITIES = L.geoJson(citiesData, { pointToLayer: pointToLayer, onEachFeature: MARKERonEachFeature}).addTo(map); //for labels of cities
 var CITIES = L.geoJson(citiesData, {
     pointToLayer:MARKERpointToLayer
-}).addTo(map); //for labels of cities
+}); //for labels of cities
 
 //kolory do skal
 function getColorByCost(d) {
@@ -457,7 +458,9 @@ function getDescription(feature) {
     }
 
     if (feature.properties.students) {
-        content += '<b><div>Liczba uczniów: </b>' + parseFloat(feature.properties.students).toLocaleString(undefined) + '</div>';
+        if (feature.properties.students > 0) {
+            content += '<b><div>Liczba uczniów: </b>' + parseFloat(feature.properties.students).toLocaleString(undefined) + '</div>';
+        }
     }
 
     if (feature.properties.perCitizen) {
