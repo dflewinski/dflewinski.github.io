@@ -51,8 +51,8 @@ var LEGENDPALETTE8 = [
 
 var infoText = {
     title: "Koszty lekcji religii w gminach i miastach województwa kujawsko-pomorskiego",
-    content:"Obejmuje głównie szkoły podstawowe i przedszkola. Nie zawiera kosztów ponoszonych przez powiaty (np. większość szkół średnich).",
-    dataSource:'Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/2858836657723892">Świecka szkoła Kujawsko-Pomorskie</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej. Jeżeli posiadasz takie dane i chcesz nimi się podzielić, skontaktuj się z twórcą mapy.'
+    content:"Obejmuje głównie szkoły podstawowe i przedszkola. Nie zawiera kosztów ponoszonych przez powiaty (np. większość szkół średnich), jeżeli nie wspomniano inaczej.",
+    dataSource:'Dane zebrane przez użytkowników grupy <a href="https://www.facebook.com/groups/2858836657723892">Świecka szkoła Kujawsko-Pomorskie</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej. Jeżeli posiadasz takie i chcesz nimi się podzielić, skontaktuj się z twórcą mapy.'
 }
 
 var footerText = {
