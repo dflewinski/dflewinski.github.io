@@ -50,7 +50,7 @@ var LEGENDPALETTE8 = [
 ]
 
 var infoText = {
-    title: "Koszty lekcji religii w gminach i miastach województwa lubelskiego",
+    title: "Koszty lekcji religii w gminach i miastach województwa lubuskiego",
     content:"Obejmuje głównie szkoły podstawowe i przedszkola. Nie zawiera kosztów ponoszonych przez powiaty (np. większość szkół średnich), jeżeli nie wspomniano inaczej.",
     dataSource:'Dane zebrane przez użytkowników grupy <a href="">Świecka szkoła lubuskie</a> przy użyciu wniosków do lokalnych samorządów o udzielenie informacji publicznej. Jeżeli posiadasz takie i chcesz nimi się podzielić, skontaktuj się z twórcą mapy.'
 }
