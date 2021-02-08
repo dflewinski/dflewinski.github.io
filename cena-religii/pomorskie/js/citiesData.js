@@ -182,32 +182,6 @@ var citiesData = {
                     54.75791607936991
                 ]
             }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Miastko"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    17.0013427734375,
-                    54.03681240523652
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
-                "name": "Nowy Dwór Gdański"
-            },
-            "geometry": {
-                "type": "Point",
-                "coordinates": [
-                    19.16839599609375,
-                    54.20743611987478
-                ]
-            }
         }
     ]
 }
