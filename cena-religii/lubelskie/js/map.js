@@ -18,10 +18,10 @@ var info = L.control();
 
 function infoDescriptionOnCreate() {
     return '<div id="accordion">\n' +
-        '  <h4 style="font-weight: bold">'+ infoText.title +'</h4>' +
+        '  <h4 style="font-weight: bold">' + infoText.title + '</h4>' +
         '  <div>' +
-        '<p>'+ infoText.content +'</p>' +
-        '<p>'+ infoText.dataSource +'</p>' +
+        '<p>' + infoText.content + '</p>' +
+        '<p>' + infoText.dataSource + '</p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
         '<div><a href="https://stat.gov.pl/obszary-tematyczne/ludnosc/ludnosc/powierzchnia-i-ludnosc-w-przekroju-terytorialnym-w-2019-roku,7,16.html">Ludność.</a></div>' +
@@ -42,15 +42,17 @@ info.update = function (props) {
 info.addTo(map);
 
 //for to create the noninteractive markers
-function MARKERpointToLayer(feature, latlng){
+function MARKERpointToLayer(feature, latlng) {
     label = String(feature.properties.name) // Must convert to string, .bindTooltip can't use straight 'feature.properties.attribute'
     return new L.CircleMarker(latlng, {
         radius: 1,
         stroke: false,
         weight: 0,
-    }).bindTooltip(label, {permanent: true,
+    }).bindTooltip(label, {
+        permanent: true,
         direction: "center",
-        className: "city-marker-label"}).openTooltip();
+        className: "city-marker-label"
+    }).openTooltip();
 }
 
 // function pointToLayer(point, latlng) {
@@ -76,7 +78,7 @@ var GMINACOST = L.geoJson(gminyData, {style: styleGminaCost, onEachFeature: GMIN
 var SUBVENTION = L.geoJson(gminyData, {style: styleSubvention, onEachFeature: SUBVENTIONonEachFeature});
 // var CITIES = L.geoJson(citiesData, { pointToLayer: pointToLayer, onEachFeature: MARKERonEachFeature}).addTo(map); //for labels of cities
 var CITIES = L.geoJson(citiesData, {
-    pointToLayer:MARKERpointToLayer
+    pointToLayer: MARKERpointToLayer
 }); //for labels of cities
 
 //kolory do skal
@@ -138,9 +140,9 @@ function getColorByGminaCost(d) {
                         d > 20000 ? LEGENDPALETTE8[5] :
                             d > 0 ? LEGENDPALETTE8[6] :
                                 d === ' ' ? LEGENDPALETTE8[8] :
-                                d === null ? LEGENDPALETTE8[8] :
-                                    d === "" ? LEGENDPALETTE8[8]:
-                                    '#3cc31f'; //when value is 0
+                                    d === null ? LEGENDPALETTE8[8] :
+                                        d === "" ? LEGENDPALETTE8[8] :
+                                            '#3cc31f'; //when value is 0
 }
 
 function styleGminaCost(feature) {
@@ -163,9 +165,9 @@ function getColorBySubvention(d) {
                         d > 200000 ? LEGENDPALETTE8[5] :
                             d > 0 ? LEGENDPALETTE8[6] :
                                 d === ' ' ? LEGENDPALETTE8[8] :
-                                d === null ? LEGENDPALETTE8[8] :
-                                    d === "" ? LEGENDPALETTE8[8]:
-                                    '#3cc31f'; //when value is 0
+                                    d === null ? LEGENDPALETTE8[8] :
+                                        d === "" ? LEGENDPALETTE8[8] :
+                                            '#3cc31f'; //when value is 0
 }
 
 function styleSubvention(feature) {
@@ -253,7 +255,7 @@ PERSTUDENTlegend.onAdd = function (map) {
         var idom = document.createElement("i");
         idom.style.background = getColorByPerStudent(grades[i]);
         div.appendChild(idom);
-        div.innerHTML += labels[i] +'<br>';
+        div.innerHTML += labels[i] + '<br>';
     }
     return div;
 };
@@ -466,11 +468,15 @@ function getDescription(feature) {
     }
 
     if (feature.properties.perCitizen) {
-        content += '<b><div>Kwota na mieszkańca: </b>' + parseFloat(feature.properties.perCitizen).toLocaleString(undefined) + ' zł/os</div>';
+        if (feature.properties.perStudent != 0) {
+            content += '<b><div>Kwota na mieszkańca: </b>' + parseFloat(feature.properties.perCitizen).toLocaleString(undefined) + ' zł/os</div>';
+        }
     }
 
     if (feature.properties.perStudent) {
-        content += '<b><div>Kwota na ucznia: </b>' + parseFloat(feature.properties.perStudent).toLocaleString(undefined) + ' zł/os</div>';
+        if (feature.properties.perStudent != 0) {
+            content += '<b><div>Kwota na ucznia: </b>' + parseFloat(feature.properties.perStudent).toLocaleString(undefined) + ' zł/os</div>';
+        }
     }
 
     if (feature.properties.description) {
@@ -484,7 +490,7 @@ function getDescriptionPopup(feature) {
     var content = '';
     content += getDescription(feature);
 
-    if((feature.properties.subvention && feature.properties.subvention !== " ") || (feature.properties.gminaCost && feature.properties.gminaCost !== " ")|| feature.properties.link.length > 0) {
+    if ((feature.properties.subvention && feature.properties.subvention !== " ") || (feature.properties.gminaCost && feature.properties.gminaCost !== " ") || feature.properties.link.length > 0) {
         content += '<br>';
         if (feature.properties.subvention) {
             if (feature.properties.subvention !== " ") {
@@ -524,16 +530,16 @@ function STATUSonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
-        if(temppopup!==0){
+        if (temppopup !== 0) {
             layer.closeTooltip();
         }
     });
 
-    layer.on('popupopen',function (f,l){
+    layer.on('popupopen', function (f, l) {
         temppopup = 1;
     });
 
-    layer.on('popupclose',function (f,l){
+    layer.on('popupclose', function (f, l) {
         temppopup = 0;
     });
 
@@ -559,16 +565,16 @@ function PERSTUDENTonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
-        if(temppopup!==0){
+        if (temppopup !== 0) {
             layer.closeTooltip();
         }
     });
 
-    layer.on('popupopen',function (f,l){
+    layer.on('popupopen', function (f, l) {
         temppopup = 1;
     });
 
-    layer.on('popupclose',function (f,l){
+    layer.on('popupclose', function (f, l) {
         temppopup = 0;
     });
 
@@ -594,16 +600,16 @@ function PERCITIZENonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
-        if(temppopup!==0){
+        if (temppopup !== 0) {
             layer.closeTooltip();
         }
     });
 
-    layer.on('popupopen',function (f,l){
+    layer.on('popupopen', function (f, l) {
         temppopup = 1;
     });
 
-    layer.on('popupclose',function (f,l){
+    layer.on('popupclose', function (f, l) {
         temppopup = 0;
     });
 
@@ -629,16 +635,16 @@ function COSTonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
-        if(temppopup!==0){
+        if (temppopup !== 0) {
             layer.closeTooltip();
         }
     });
 
-    layer.on('popupopen',function (f,l){
+    layer.on('popupopen', function (f, l) {
         temppopup = 1;
     });
 
-    layer.on('popupclose',function (f,l){
+    layer.on('popupclose', function (f, l) {
         temppopup = 0;
     });
 
@@ -664,16 +670,16 @@ function GMINACOSTonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
-        if(temppopup!==0){
+        if (temppopup !== 0) {
             layer.closeTooltip();
         }
     });
 
-    layer.on('popupopen',function (f,l){
+    layer.on('popupopen', function (f, l) {
         temppopup = 1;
     });
 
-    layer.on('popupclose',function (f,l){
+    layer.on('popupclose', function (f, l) {
         temppopup = 0;
     });
 
@@ -699,16 +705,16 @@ function SUBVENTIONonEachFeature(feature, layer) {
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
-        if(temppopup!==0){
+        if (temppopup !== 0) {
             layer.closeTooltip();
         }
     });
 
-    layer.on('popupopen',function (f,l){
+    layer.on('popupopen', function (f, l) {
         temppopup = 1;
     });
 
-    layer.on('popupclose',function (f,l){
+    layer.on('popupclose', function (f, l) {
         temppopup = 0;
     });
 
