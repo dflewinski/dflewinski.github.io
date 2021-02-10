@@ -97,7 +97,7 @@ function getColorByCost(d) {
 
 function styleCost(feature) {
     return {
-        weight: 2,
+        weight: 0.7,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -120,7 +120,7 @@ function getColorByPerCitizen(d) {
 
 function stylePerCitizen(feature) {
     return {
-        weight: 2,
+        weight: 0.7,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -145,7 +145,7 @@ function getColorByGminaCost(d) {
 
 function styleGminaCost(feature) {
     return {
-        weight: 2,
+        weight: 0.7,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -170,7 +170,7 @@ function getColorBySubvention(d) {
 
 function styleSubvention(feature) {
     return {
-        weight: 2,
+        weight: 0.7,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -188,7 +188,7 @@ function getColorByStatus(d) {
 
 function styleStatus(feature) {
     return {
-        weight: 2,
+        weight: 0.7,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -211,7 +211,7 @@ function getColorByPerStudent(d) {
 
 function stylePerStudent(feature) {
     return {
-        weight: 2,
+        weight: 0.7,
         opacity: 1,
         color: 'white',
         dashArray: '3',
