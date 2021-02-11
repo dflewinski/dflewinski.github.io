@@ -480,7 +480,7 @@ function getDescription(feature) {
     }
 
     if (feature.properties.description) {
-        content += '<br><div><b>Uwaga:</b></div><div class="tooltip">' + feature.properties.description + '</div><br>';
+        content += '<br><div><b>Uwaga:</b></div><div class="tooltip">' + feature.properties.description + '</div>';
     }
 
     return content;
@@ -505,7 +505,7 @@ function getDescriptionPopup(feature) {
         }
 
         if (feature.properties.link.length > 0) {
-            content += '<br><div><b>Źródła:</b></div>';
+            content += '<div><b>Źródła:</b></div>';
             for (let j = 0; j < feature.properties.link.length; j++) {
                 content += '<div class="tooltip"><a href="' + feature.properties.link[j] + '">' + feature.properties.link[j] + '</a><div/>';
             }
