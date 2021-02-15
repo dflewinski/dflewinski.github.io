@@ -185,7 +185,8 @@ function getColorByStatus(d) {
     return d == 1 ? STATUSPALETTE4[1] :
         d == 2 ? STATUSPALETTE4[2] :
             d == 3 ? STATUSPALETTE4[3] :
-                STATUSPALETTE4[0];
+                d == 0 ? STATUSPALETTE4[0] :
+                    STATUSPALETTE4[2];
 }
 
 function styleStatus(feature) {
