@@ -470,13 +470,13 @@ function getDescription(feature) {
 
     if (feature.properties.perCitizen) {
         if (feature.properties.perStudent != 0) {
-            content += '<b><div>Kwota na mieszkańca: </b>' + parseFloat(feature.properties.perCitizen).toLocaleString(undefined) + ' zł/os</div>';
+            content += '<b><div>Kwota na mieszkańca: </b>' + parseFloat(feature.properties.perCitizen).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' zł/os</div>';
         }
     }
 
     if (feature.properties.perStudent) {
         if (feature.properties.perStudent != 0) {
-            content += '<b><div>Kwota na ucznia: </b>' + parseFloat(feature.properties.perStudent).toLocaleString(undefined) + ' zł/os</div>';
+            content += '<b><div>Kwota na ucznia: </b>' + parseFloat(feature.properties.perStudent).toLocaleString(undefined ,{minimumFractionDigits: 2}) + ' zł/os</div>';
         }
     }
 
