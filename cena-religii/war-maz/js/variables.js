@@ -1,3 +1,9 @@
+var minZoom = 7;
+var maxZoom = 10.5;
+var zoomSnap = 0.30;
+var zoomDelta = 0.30;
+var wheelPxPerZoomLevel = 200;
+
 var hoverStyle = {
     weight: 3,
     color: '#838383',

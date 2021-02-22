@@ -1,11 +1,11 @@
 //wczytywanie danych
 var map = L.map('mapid').setView([54.186, 18.031], 7);
 
-map.options.minZoom = 7;
-map.options.maxZoom = 10.5;
-map.options.zoomSnap = 0.30;
-map.options.zoomDelta = 0.30;
-map.options.wheelPxPerZoomLevel = 200;
+map.options.minZoom = minZoom;
+map.options.maxZoom = maxZoom;
+map.options.zoomSnap = zoomSnap;
+map.options.zoomDelta = zoomDelta;
+map.options.wheelPxPerZoomLevel = wheelPxPerZoomLevel;
 
 $(function () {
     $("#accordion").accordion({
