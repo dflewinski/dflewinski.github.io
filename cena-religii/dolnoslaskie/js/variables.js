@@ -16,7 +16,8 @@ var STATUSPALETTE4 = [
     '#FDDCA2',
     // '#CBCBCB',
     '#a0a0a0',
-    '#32b13c'
+    '#32b13c',
+    '#648ed7'
 ]
 
 // var LEGENDPALETTE8 = [

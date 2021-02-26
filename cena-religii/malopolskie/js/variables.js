@@ -14,9 +14,9 @@ var hoverStyle = {
 var STATUSPALETTE4 = [
     '#9F4439',
     '#FDDCA2',
-    // '#CBCBCB',
     '#a0a0a0',
-    '#32b13c'
+    '#32b13c',
+    '#648ed7'
 ]
 
 // var LEGENDPALETTE8 = [

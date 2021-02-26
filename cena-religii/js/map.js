@@ -186,6 +186,7 @@ function getColorByStatus(d) {
         d == 2 ? STATUSPALETTE4[2] :
             d == 3 ? STATUSPALETTE4[3] :
                 d == 0 ? STATUSPALETTE4[0] :
+                    d == 4 ? (STATUSPALETTE4[4] == null ? STATUSPALETTE4[2] : STATUSPALETTE4[4]) :
                     STATUSPALETTE4[2];
 }
 
