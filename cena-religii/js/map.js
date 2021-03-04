@@ -21,11 +21,15 @@ var CITIES = L.geoJson(citiesData, {
 var totalJST = 0;
 var readyJST = 0;
 var readyCost = 0;
+var totalStudent = 0;
+var readyStudent = 0;
 
 gminyData.features.forEach(function (feature) {
     totalJST++;
+    totalStudent += parseFloat(feature.properties.students);
     if (feature.properties.status == 3) {
         readyJST++;
+        readyStudent += parseFloat(feature.properties.students);
         if (!isNaN(feature.properties.price)) {
             if (feature.properties.price != "") {
                 readyCost += parseFloat(feature.properties.price);
@@ -44,17 +48,35 @@ $(function () {
 var info = L.control();
 
 function infoDescriptionOnCreate() {
-    return '<div id="accordion">\n' +
+    var result = '<div id="accordion">\n' +
         '  <h4 style="font-weight: bold">' + infoText.title + '</h4>' +
         '  <div>' +
         '<p>' + infoText.content + '</p>' +
         '<p>' + infoText.dataSource + '</p>' +
-        '<p>' + "Opracowane JST: " + readyJST + "/" + totalJST + '</p>' +
-        '<p>' + "Koszt w opracowanych JST: " + parseFloat(readyCost.toString()).toLocaleString(undefined, {minimumFractionDigits: 2}) + " zł" + '</p>' +
+        '<p>' + "Opracowane JST: " + readyJST.toLocaleString(undefined) + "/" + totalJST.toLocaleString(undefined) + ' (' +(readyJST/totalJST*100).toLocaleString(undefined, {maximumFractionDigits: 1})+'%)'+'</p>';
+
+    if(!isNaN(totalStudent)) {
+        result = result +
+            '<p>' + "Uczniowie: " + readyStudent.toLocaleString(undefined) + "/" + totalStudent.toLocaleString(undefined) + ' (' +(readyStudent/totalStudent*100).toLocaleString(undefined, {maximumFractionDigits: 1})+'%)'+ '</p>';
+    }
+
+    result = result +
+        '<p>' + "Koszt w opracowanych JST: " + parseFloat(readyCost.toString()).toLocaleString(undefined, {minimumFractionDigits: 2}) + " zł" + '</p>';
+
+    if(!isNaN(totalStudent)) {
+        result = result +
+            '<p>' + "Przewidywane całkowite wydatki: " + parseFloat((totalStudent * readyCost / readyStudent).toString()).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + ' zł</p>';
+    }
+
+    result = result +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
         '<div><a href="https://stat.gov.pl/obszary-tematyczne/ludnosc/ludnosc/powierzchnia-i-ludnosc-w-przekroju-terytorialnym-w-2019-roku,7,16.html">Ludność.</a></div>' +
-        '</div>'
+        '</div>';
+    return result;
 }
 
 info.onAdd = function (map) {
