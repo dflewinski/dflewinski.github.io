@@ -7,6 +7,33 @@ map.options.zoomSnap = zoomSnap;
 map.options.zoomDelta = zoomDelta;
 map.options.wheelPxPerZoomLevel = wheelPxPerZoomLevel;
 
+var STATUS = L.geoJson(gminyData, {style: styleStatus, onEachFeature: STATUSonEachFeature});
+var COST = L.geoJson(gminyData, {style: styleCost, onEachFeature: COSTonEachFeature});
+var PERSTUDENT = L.geoJson(gminyData, {style: stylePerStudent, onEachFeature: PERSTUDENTonEachFeature}).addTo(map);
+var PERCITIZEN = L.geoJson(gminyData, {style: stylePerCitizen, onEachFeature: PERCITIZENonEachFeature});
+var GMINACOST = L.geoJson(gminyData, {style: styleGminaCost, onEachFeature: GMINACOSTonEachFeature});
+var SUBVENTION = L.geoJson(gminyData, {style: styleSubvention, onEachFeature: SUBVENTIONonEachFeature});
+// var CITIES = L.geoJson(citiesData, { pointToLayer: pointToLayer, onEachFeature: MARKERonEachFeature}).addTo(map); //for labels of cities
+var CITIES = L.geoJson(citiesData, {
+    pointToLayer: MARKERpointToLayer
+});
+
+var totalJST = 0;
+var readyJST = 0;
+var readyCost = 0;
+
+gminyData.features.forEach(function (feature) {
+    totalJST++;
+    if (feature.properties.status == 3) {
+        readyJST++;
+        if (!isNaN(feature.properties.price)) {
+            if (feature.properties.price != "") {
+                readyCost += parseFloat(feature.properties.price);
+            }
+        }
+    }
+})
+
 $(function () {
     $("#accordion").accordion({
         collapsible: true,
@@ -22,6 +49,8 @@ function infoDescriptionOnCreate() {
         '  <div>' +
         '<p>' + infoText.content + '</p>' +
         '<p>' + infoText.dataSource + '</p>' +
+        '<p>' + "Opracowane JST: " + readyJST + "/" + totalJST + '</p>' +
+        '<p>' + "Koszt w opracowanych JST: " + parseFloat(readyCost.toString()).toLocaleString(undefined, {minimumFractionDigits: 2}) + " zł" + '</p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
         '<div><a href="https://stat.gov.pl/obszary-tematyczne/ludnosc/ludnosc/powierzchnia-i-ludnosc-w-przekroju-terytorialnym-w-2019-roku,7,16.html">Ludność.</a></div>' +
@@ -69,17 +98,6 @@ function MARKERpointToLayer(feature, latlng) {
 // function MARKERonEachFeature(feature, layer) {
 //     layer.bindTooltip(feature.properties.name, {permanent: true, className: "my-label", offset: [0, 0] });
 // }
-
-var STATUS = L.geoJson(gminyData, {style: styleStatus, onEachFeature: STATUSonEachFeature});
-var COST = L.geoJson(gminyData, {style: styleCost, onEachFeature: COSTonEachFeature});
-var PERSTUDENT = L.geoJson(gminyData, {style: stylePerStudent, onEachFeature: PERSTUDENTonEachFeature}).addTo(map);
-var PERCITIZEN = L.geoJson(gminyData, {style: stylePerCitizen, onEachFeature: PERCITIZENonEachFeature});
-var GMINACOST = L.geoJson(gminyData, {style: styleGminaCost, onEachFeature: GMINACOSTonEachFeature});
-var SUBVENTION = L.geoJson(gminyData, {style: styleSubvention, onEachFeature: SUBVENTIONonEachFeature});
-// var CITIES = L.geoJson(citiesData, { pointToLayer: pointToLayer, onEachFeature: MARKERonEachFeature}).addTo(map); //for labels of cities
-var CITIES = L.geoJson(citiesData, {
-    pointToLayer: MARKERpointToLayer
-}); //for labels of cities
 
 //kolory do skal
 function getColorByCost(d) {
@@ -187,7 +205,7 @@ function getColorByStatus(d) {
             d == 3 ? STATUSPALETTE4[3] :
                 d == 0 ? STATUSPALETTE4[0] :
                     d == 4 ? (STATUSPALETTE4[4] == null ? STATUSPALETTE4[2] : STATUSPALETTE4[4]) :
-                    STATUSPALETTE4[2];
+                        STATUSPALETTE4[2];
 }
 
 function styleStatus(feature) {
@@ -477,7 +495,7 @@ function getDescription(feature) {
 
     if (feature.properties.perStudent) {
         if (feature.properties.perStudent != 0) {
-            content += '<b><div>Kwota na ucznia: </b>' + parseFloat(feature.properties.perStudent).toLocaleString(undefined ,{minimumFractionDigits: 2}) + ' zł/os</div>';
+            content += '<b><div>Kwota na ucznia: </b>' + parseFloat(feature.properties.perStudent).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' zł/os</div>';
         }
     }
 
