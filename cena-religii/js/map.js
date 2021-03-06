@@ -64,11 +64,13 @@ function infoDescriptionOnCreate() {
         '<p>' + "Koszt w opracowanych JST: " + parseFloat(readyCost.toString()).toLocaleString(undefined, {minimumFractionDigits: 2}) + " zł" + '</p>';
 
     if(!isNaN(totalStudent)) {
-        result = result +
-            '<p>' + "Przewidywane całkowite wydatki: " + parseFloat((totalStudent * readyCost / readyStudent).toString()).toLocaleString(undefined, {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2
-            }) + ' zł</p>';
+        if(readyStudent != 0) {
+            result = result +
+                '<p>' + "Przewidywane całkowite wydatki: " + parseFloat((totalStudent * readyCost / readyStudent).toString()).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) + ' zł</p>';
+        }
     }
 
     result = result +
