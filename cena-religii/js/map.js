@@ -38,12 +38,27 @@ gminyData.features.forEach(function (feature) {
     }
 })
 
+function hideLegend() {
+    return function (event, ui) {
+        var act = $("#accordion").accordion("option", "active");
+        console.log(act);
+
+        if (act === false) {
+            $(".legend").css("opacity", 0);
+        } else {
+            $(".legend").css("opacity", 1);
+        }
+    };
+}
+
 $(function () {
     $("#accordion").accordion({
         collapsible: true,
-        active: false
+        active: false,
+        beforeActivate: hideLegend()
     });
 });
+
 
 var info = L.control();
 
@@ -108,21 +123,6 @@ function MARKERpointToLayer(feature, latlng) {
     }).openTooltip();
 }
 
-// function pointToLayer(point, latlng) {
-//     return L.marker(latlng, {interactive: false, 'icon':L.icon({
-//             iconUrl: '//leafletjs.com/docs/images/leaf-green.png',
-//             shadowUrl: '//leafletjs.com/docs/images/leaf-shadow.png',
-//             iconSize:     [38, 95], // size of the icon
-//             shadowSize:   [50, 64], // size of the shadow
-//             iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-//             shadowAnchor: [4, 62],  // the same for the shadow
-//             popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-//         })});
-// }
-// function MARKERonEachFeature(feature, layer) {
-//     layer.bindTooltip(feature.properties.name, {permanent: true, className: "my-label", offset: [0, 0] });
-// }
-
 //kolory do skal
 function getColorByCost(d) {
     // var mapscale = chroma.scale(['green', 'red']).domain([1, 1200001], 8, 'log');
@@ -141,7 +141,7 @@ function getColorByCost(d) {
 
 function styleCost(feature) {
     return {
-        weight: 0.7,
+        weight: 0.3,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -164,7 +164,7 @@ function getColorByPerCitizen(d) {
 
 function stylePerCitizen(feature) {
     return {
-        weight: 0.7,
+        weight: 0.3,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -189,7 +189,7 @@ function getColorByGminaCost(d) {
 
 function styleGminaCost(feature) {
     return {
-        weight: 0.7,
+        weight: 0.3,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -214,7 +214,7 @@ function getColorBySubvention(d) {
 
 function styleSubvention(feature) {
     return {
-        weight: 0.7,
+        weight: 0.3,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -234,7 +234,7 @@ function getColorByStatus(d) {
 
 function styleStatus(feature) {
     return {
-        weight: 0.7,
+        weight: 0.3,
         opacity: 1,
         color: 'white',
         dashArray: '3',
@@ -257,7 +257,7 @@ function getColorByPerStudent(d) {
 
 function stylePerStudent(feature) {
     return {
-        weight: 0.7,
+        weight: 0.3,
         opacity: 1,
         color: 'white',
         dashArray: '3',
