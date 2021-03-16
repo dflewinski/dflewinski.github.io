@@ -551,7 +551,7 @@ function getDescriptionPopup(feature) {
         if (feature.properties.link.length > 0) {
             content += '<div><b>Źródła:</b></div>';
             for (let j = 0; j < feature.properties.link.length; j++) {
-                content += '<div class="tooltip"><a href="' + feature.properties.link[j] + '">' + feature.properties.link[j] + '</a><div/>';
+                content += '<div class="tooltip"><a target="_blank" href="' + feature.properties.link[j] + '">' + feature.properties.link[j] + '</a><div/>';
             }
         }
     }
