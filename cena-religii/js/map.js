@@ -1,5 +1,9 @@
 //wczytywanie danych
-var map = L.map('mapid').setView([54.186, 18.031], 7);
+var map = L.map('mapid', {
+    renderer: L.canvas(
+        {padding: 0.7}
+        )
+}).setView([54.186, 18.031], 7);
 
 map.options.minZoom = minZoom;
 map.options.maxZoom = maxZoom;
