@@ -1,5 +1,5 @@
 var minZoom = 5.5;
-var maxZoom = 10.5;
+var maxZoom = 9.5;
 var zoomSnap = 0.30;
 var zoomDelta = 0.30;
 var wheelPxPerZoomLevel = 200;
@@ -56,9 +56,9 @@ var LEGENDPALETTE8 = [
 ]
 
 var infoText = {
-    title: "Koszty lekcji religii w jednostkach samorządu terytorialnego.",
+    title: "Koszty lekcji religii w jednostkach samorządu terytorialnego",
     content: "Zawiera koszty ponoszone na wynagrodzenia katechetów w placówkach prowadzonych przez samorządy (o ile " +
-        "nie wspomniano inaczej). Wartość \"liczba uczniów\" obejmuje uczniów i przedszkolaków uczęszczających do placówek" +
+        "nie wspomniano inaczej). Wartość \"liczba uczniów\" obejmuje uczniów i przedszkolaków uczęszczających do placówek " +
         "prowadzonych przez JST, zadeklarowaną przez MEN (patrz źródła).",
     dataSource:'Jeżeli posiadasz odpowiedzi urzędów i chcesz nimi się podzielić, skontaktuj się z twórcą mapy.'
 }
