@@ -23,18 +23,23 @@
     <link href="https://use.fontawesome.com/releases/v5.0.2/css/solid.css" rel="stylesheet">
     <meta name="theme-color" content="#fafafa">
     <script type="text/javascript" src="js/variables.js"></script>
-    <script type="text/javascript" src="js/citiesData.js"></script>
-    <script type="text/javascript" src="js/gminyData.js"></script>
+    <script type="text/javascript" src="js/easy-button.js"></script>
 </head>
 
 <body>
 <div id="mapid"></div>
+<div id="loading">
+    <img id="loading-image" src="../images/Settings.gif" alt="Loading..." />
+</div>
 <script type="text/javascript">
     $('#mapid').css('opacity', 0);
     $(window).load(function() {
         $('#mapid').css('opacity', 1);
+        $('#loading').hide();
     });
 </script>
+<script type="text/javascript" src="js/citiesData.js"></script>
+<script type="text/javascript" src="js/gminyData.js"></script>
 <script type="text/javascript" src="../js/map.js"></script>
 
 </body>

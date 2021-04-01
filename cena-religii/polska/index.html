@@ -29,10 +29,14 @@
 
 <body>
 <div id="mapid"></div>
+<div id="loading">
+    <img id="loading-image" src="../images/Settings.gif" alt="Loading..." />
+</div>
 <script type="text/javascript">
     $('#mapid').css('opacity', 0);
     $(window).load(function() {
         $('#mapid').css('opacity', 1);
+        $('#loading').hide();
     });
 </script>
 <script type="text/javascript" src="js/cities.js"></script>
