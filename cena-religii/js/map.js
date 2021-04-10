@@ -27,6 +27,7 @@ var readyJST = 0;
 var readyCost = 0;
 var totalStudent = 0;
 var readyStudent = 0;
+var answersJST = 0;
 
 gminyData.features.forEach(function (feature) {
     totalJST++;
@@ -39,6 +40,13 @@ gminyData.features.forEach(function (feature) {
                 readyCost += parseFloat(feature.properties.price);
             }
         }
+        answersJST++;
+    } else if (feature.properties.status == 0){
+        answersJST++;
+    } else if(feature.properties.status == 1){
+        answersJST++;
+    } else if (feature.properties.status == 'BRAK'){
+        answersJST++;
     }
 })
 
@@ -72,7 +80,7 @@ function infoDescriptionOnCreate() {
         '  <div>' +
         '<p>' + infoText.content + '</p>' +
         '<p>' + infoText.dataSource + '</p>' +
-        '<p>' + "Opracowane JST: " + readyJST.toLocaleString(undefined) + "/" + totalJST.toLocaleString(undefined) + ' (' +(readyJST/totalJST*100).toLocaleString(undefined, {maximumFractionDigits: 1})+'%)'+'</p>';
+        '<p>' + "Opracowane JST: " + readyJST.toLocaleString(undefined) + "("+ answersJST.toLocaleString(undefined) + ")/" + totalJST.toLocaleString(undefined) + ' (' +(readyJST/totalJST*100).toLocaleString(undefined, {maximumFractionDigits: 1})+'%)'+'</p>';
 
     if(!isNaN(totalStudent)) {
         result = result +
