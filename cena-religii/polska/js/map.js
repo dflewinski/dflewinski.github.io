@@ -28,7 +28,7 @@ var WOJEWODZTWO_LINES = L.geoJson(wojewodztwa, {style: styleLines, pane:'lines'}
 
 function styleLines(){
     return {
-        color: '#707070',
+        color: '#919191',
         weight: 1.5
     }
 }
