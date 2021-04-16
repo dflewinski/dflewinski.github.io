@@ -20,6 +20,14 @@ var POWIAT_COST = L.geoJson(powiaty, {style: styleCost, onEachFeature: onEachFea
 var POWIAT_PER_STUDENT = L.geoJson(powiaty, {style: stylePerStudent, onEachFeature: onEachFeature});
 
 var CITIES = L.geoJson(cities, {pointToLayer: markerPointToLayer});
+var WOJEWODZTWO_LINES = L.geoJson(wojewodztwa, {style: styleLines}).addTo(map);
+
+function styleLines(){
+    return {
+        color: '#707070',
+        weight: 1
+    }
+}
 
 var currentLayer = GMINA_COST; //for reset style for each method
 
@@ -310,36 +318,43 @@ map.on('baselayerchange', function (eventLayer) {
         currentLegend = LEGEND_STATUS;
         currentLayer = GMINA_STATUS;
         LEGEND_STATUS.addTo(map);
+        WOJEWODZTWO_LINES.bringToFront();
     } else if (eventLayer.name === 'Gmina - koszt') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_COST;
         currentLayer = GMINA_COST;
         LEGEND_COST.addTo(map);
+        WOJEWODZTWO_LINES.bringToFront();
     } else if (eventLayer.name === 'Gmina - na ucznia') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_PER_STUDENT;
         currentLayer = GMINA_PER_STUDENT;
         LEGEND_PER_STUDENT.addTo(map);
+        WOJEWODZTWO_LINES.bringToFront();
     } else if (eventLayer.name === 'Gmina - na mieszkańca') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_PER_CITIZEN;
         currentLayer = GMINA_PER_CITIZEN;
         LEGEND_PER_CITIZEN.addTo(map);
+        WOJEWODZTWO_LINES.bringToFront();
     } else if (eventLayer.name === 'Powiat - status') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_STATUS;
         currentLayer = POWIAT_STATUS;
         LEGEND_STATUS.addTo(map);
+        WOJEWODZTWO_LINES.bringToFront();
     } else if (eventLayer.name === 'Powiat - koszt') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_COST;
         currentLayer = POWIAT_COST;
         LEGEND_COST.addTo(map);
+        WOJEWODZTWO_LINES.bringToFront();
     } else if (eventLayer.name === 'Powiat - na ucznia') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_PER_STUDENT;
         currentLayer = POWIAT_PER_STUDENT;
         LEGEND_PER_STUDENT.addTo(map);
+        WOJEWODZTWO_LINES.bringToFront();
     }
 });
 
