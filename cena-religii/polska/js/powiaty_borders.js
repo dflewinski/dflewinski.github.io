@@ -1,0 +1,1 @@
+var powiaty_borders = {}

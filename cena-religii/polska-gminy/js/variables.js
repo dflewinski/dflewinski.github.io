@@ -11,12 +11,17 @@ var hoverStyle = {
     fillOpacity: 0.7
 };
 
-var STATUSPALETTE4 = [
+var STATUS_PALETTE4 = [
     '#9F4439',
     '#FDDCA2',
     '#a0a0a0',
     '#32b13c',
     '#648ed7'
+]
+
+var BORDER_COLOR = [
+    '#606060',
+    '#919191'
 ]
 
 // var LEGENDPALETTE8 = [

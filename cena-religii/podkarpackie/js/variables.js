@@ -11,7 +11,7 @@ var hoverStyle = {
     fillOpacity: 0.7
 };
 
-var STATUSPALETTE4 = [
+var STATUS_PALETTE4 = [
     '#9F4439',
     '#FDDCA2',
     '#a0a0a0',

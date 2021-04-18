@@ -24,12 +24,21 @@ var CITIES = L.geoJson(cities, {pointToLayer: markerPointToLayer});
 map.createPane('lines');
 map.getPane('lines').style.zIndex = 401;
 
-var WOJEWODZTWO_LINES = L.geoJson(wojewodztwa, {style: styleLines, pane:'lines'}).addTo(map);
+var WOJEWODZTWO_LINES = L.geoJson(wojewodztwa_borders, {style: styleWojLines, pane:'lines'}).addTo(map);
 
-function styleLines(){
+function styleWojLines(){
     return {
-        color: '#919191',
+        color: BORDER_COLOR[0],
         weight: 1.5
+    }
+}
+
+var POWIAT_LINES;
+
+function stylePowLines(){
+    return {
+        color: BORDER_COLOR[1],
+        weight: 1
     }
 }
 
@@ -142,12 +151,12 @@ function stylePerCitizen(feature) {
 }
 
 function getColorByStatus(d) {
-    return d == 1 ? STATUSPALETTE4[1] :
-        d == 2 ? STATUSPALETTE4[2] :
-            d == 3 ? STATUSPALETTE4[3] :
-                d == 0 ? STATUSPALETTE4[0] :
-                    d == 4 ? (STATUSPALETTE4[4] == null ? STATUSPALETTE4[2] : STATUSPALETTE4[4]) :
-                        STATUSPALETTE4[2];
+    return d == 1 ? STATUS_PALETTE4[1] :
+        d == 2 ? STATUS_PALETTE4[2] :
+            d == 3 ? STATUS_PALETTE4[3] :
+                d == 0 ? STATUS_PALETTE4[0] :
+                    d == 4 ? (STATUS_PALETTE4[4] == null ? STATUS_PALETTE4[2] : STATUS_PALETTE4[4]) :
+                        STATUS_PALETTE4[2];
 }
 
 function styleStatus(feature) {

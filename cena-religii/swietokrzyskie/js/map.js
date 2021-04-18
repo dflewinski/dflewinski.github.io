@@ -182,10 +182,10 @@ function styleSubvention(feature) {
 }
 
 function getColorByStatus(d) {
-    return d == 1 ? STATUSPALETTE4[1] :
-        d == 2 ? STATUSPALETTE4[2] :
-            d == 3 ? STATUSPALETTE4[3] :
-                STATUSPALETTE4[0];
+    return d == 1 ? STATUS_PALETTE4[1] :
+        d == 2 ? STATUS_PALETTE4[2] :
+            d == 3 ? STATUS_PALETTE4[3] :
+                STATUS_PALETTE4[0];
 }
 
 function styleStatus(feature) {
