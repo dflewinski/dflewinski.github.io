@@ -30,8 +30,13 @@ var readyStudent = 0;
 var answersJST = 0;
 
 gminyData.features.forEach(function (feature) {
-    totalJST++;
-    totalStudent += parseFloat(feature.properties.students);
+    totalJST++
+
+    // let stud = parseFloat(feature.properties.students)
+    // if(!isNaN(stud)) {
+        totalStudent += parseFloat(feature.properties.students);
+    // }
+
     if (feature.properties.status == 3) {
         readyJST++;
         readyStudent += parseFloat(feature.properties.students);
@@ -92,11 +97,13 @@ function infoDescriptionOnCreate() {
 
     if(!isNaN(totalStudent)) {
         if(readyStudent != 0) {
-            result = result +
-                '<p>' + "Przewidywane całkowite wydatki: " + parseFloat((totalStudent * readyCost / readyStudent).toString()).toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                }) + ' zł</p>';
+            // if(readyStudent!=totalStudent) {
+                result = result +
+                    '<p>' + "Przewidywane całkowite wydatki: " + parseFloat((totalStudent * readyCost / readyStudent).toString()).toLocaleString(undefined, {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    }) + ' zł</p>';
+            // }
         }
     }
 
@@ -340,7 +347,7 @@ COSTlegend.onAdd = function (map) {
             '< 100 000 zł',
             'Brak danych'];
 
-    div.innerHTML += '<div><b>Roczne wydatki na katechezę</b></div><br>'
+    div.innerHTML += '<div><b>Wydatki na katechezę</b></div><br>'
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
@@ -375,7 +382,7 @@ PERCITIZENlegend.onAdd = function (map) {
             '< 10,00 zł',
             'Brak danych'];
 
-    div.innerHTML += '<div><b>Roczne wydatki na mieszkańca</b></div><br>'
+    div.innerHTML += '<div><b>Wydatki na mieszkańca</b></div><br>'
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
@@ -410,7 +417,7 @@ GMINACOSTlegend.onAdd = function (map) {
             '0 zł',
             'Brak danych'];
 
-    div.innerHTML += '<div><b>Roczne wydatki z budżetu gminy</b></div><br>'
+    div.innerHTML += '<div><b>Wydatki z budżetu gminy</b></div><br>'
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
@@ -445,7 +452,7 @@ SUBVENTIONlegend.onAdd = function (map) {
             '0 zł',
             'Brak danych'];
 
-    div.innerHTML += '<div><b>Roczna subwencja na nauczanie religii</b></div><br>'
+    div.innerHTML += '<div><b>Subwencja na nauczanie religii</b></div><br>'
 
     // loop through our density intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
@@ -790,8 +797,12 @@ L.tileLayer('', {
 }).addTo(map);
 
 //resize the geojson view to bounds
-map.fitBounds(STATUS.getBounds());
+map.fitBounds(STATUS.getBounds(), {
+    paddingTopLeft: [0, 60]
+});
 
 L.easyButton("fas fa-expand", function () {
-    map.fitBounds(STATUS.getBounds());
+    map.fitBounds(STATUS.getBounds(), {
+        paddingTopLeft: [0, 60]
+    });
 }).addTo(map);

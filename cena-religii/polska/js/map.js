@@ -24,9 +24,9 @@ var CITIES = L.geoJson(cities, {pointToLayer: markerPointToLayer});
 map.createPane('lines');
 map.getPane('lines').style.zIndex = 401;
 
-var WOJEWODZTWO_LINES = L.geoJson(wojewodztwa_borders, {style: styleWojLines, pane:'lines'}).addTo(map);
+var WOJEWODZTWO_LINES = L.geoJson(wojewodztwa_borders, {style: styleWojLines, pane: 'lines'}).addTo(map);
 
-function styleWojLines(){
+function styleWojLines() {
     return {
         color: BORDER_COLOR[0],
         weight: 1.5
@@ -35,7 +35,7 @@ function styleWojLines(){
 
 var POWIAT_LINES;
 
-function stylePowLines(){
+function stylePowLines() {
     return {
         color: BORDER_COLOR[1],
         weight: 1
@@ -47,7 +47,7 @@ var currentLayer = GMINA_COST; //for reset style for each method
 function hideLegend() {
     return function (event, ui) {
         var act = $("#accordion").accordion("option", "active");
-        console.log(act);
+        // console.log(act);
 
         if (act === false) {
             $(".legend").css("opacity", 0);
@@ -302,7 +302,6 @@ LEGEND_PER_CITIZEN.onAdd = function (map) {
 };
 
 
-
 var baseMaps = {
     "Gmina - status": GMINA_STATUS,
     "Gmina - koszt": GMINA_COST,
@@ -474,8 +473,12 @@ L.tileLayer('', {
     attribution: footerText.datasource + footerText.separator + footerText.creator,
 }).addTo(map);
 
-map.fitBounds(GMINA_STATUS.getBounds());
+map.fitBounds(GMINA_STATUS.getBounds(), {
+    paddingTopLeft: [0, 60]
+});
 
 L.easyButton("fas fa-expand", function () {
-    map.fitBounds(GMINA_STATUS.getBounds());
+    map.fitBounds(GMINA_STATUS.getBounds(), {
+        paddingTopLeft: [0, 60]
+    });
 }).addTo(map);
