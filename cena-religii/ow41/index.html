@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pl">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mapa wydatków na nauczanie lekcji religii.</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/easy-button.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.2/css/fontawesome.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.2/css/solid.css" rel="stylesheet">
+    <meta name="theme-color" content="#fafafa">
+    <script type="text/javascript" src="js/variables.js"></script>
+    <script type="text/javascript" src="js/easy-button.js"></script>
+
+</head>
+
+<body>
+<div id="mapid"></div>
+<div id="loading">
+    <img id="loading-image" src="../images/Settings.gif" alt="Loading..." />
+</div>
+<script type="text/javascript">
+    $('#mapid').css('opacity', 0);
+    $(window).load(function() {
+        $('#mapid').css('opacity', 1);
+        $('#loading').hide();
+    });
+</script>
+<script type="text/javascript" src="js/cities.js"></script>
+<script type="text/javascript" src="js/gminy.js"></script>
+<script type="text/javascript" src="js/powiaty.js"></script>
+<script type="text/javascript" src="js/powiaty_borders.js"></script>
+<script type="text/javascript" src="js/wojewodztwa_borders.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+
+</body>
+</html>
