@@ -62,7 +62,7 @@ var LEGENDPALETTE8 = [
 
 var infoText = {
     title: "Koszty lekcji religii w gminach i miastach na prawach powiatu.",
-    content:"Obejmuje instytucje, w których organem prowadzącym jest gmina lub miasto na prawach powiatu. Nie zawiera kosztów ponoszonych przez powiaty (np. większość szkół średnich), jeżeli nie wspomniano inaczej.",
+    content:"Obejmuje szkoły i przedszkola dla których organem prowadzącym jest jednostka samorządu terytorialnego na rok szkolny 2019-2020 (o ile nie wspomniano inaczej).",
     dataSource:'Jeżeli posiadasz odpowiedzi urzędów i chcesz nimi się podzielić, skontaktuj się z twórcą mapy.'
 }
 
