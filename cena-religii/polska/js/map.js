@@ -301,6 +301,40 @@ LEGEND_PER_CITIZEN.onAdd = function (map) {
     return div;
 };
 
+L.easyButton("fas fa-expand", function () {
+    map.fitBounds(GMINA_STATUS.getBounds(), {
+        paddingTopLeft: [0, 60]
+    });
+}).addTo(map);
+
+var searchControl = new L.Control.Search({
+    layer: currentLayer,
+    propertyName: 'JPT_NAZWA_',
+    marker: false,
+    position: 'topleft',
+    textPlaceholder: 'Wpisz JST',
+    textErr: 'Nie znaleziono',
+    moveToLocation: function (latlng, title, map) {
+        //map.fitBounds( latlng.layer.getBounds() );
+        var zoom = map.getBoundsZoom(latlng.layer.getBounds());
+        map.setView(latlng, zoom); // access the zoom
+    }
+});
+
+searchControl.on('search:locationfound', function (e) {
+    if (e.layer._popup)
+        e.layer.openPopup();
+}).on('search:collapsed', function (e) {
+    currentLayer.eachLayer(function (layer) {	//restore feature color
+        currentLayer.resetStyle(layer);
+    });
+});
+
+// searchControl.on('keyup', function (e) {
+//     controlSearch.searchText(e.target.value);
+// })
+
+map.addControl(searchControl);  //inizialize search control
 
 var baseMaps = {
     "Gmina - status": GMINA_STATUS,
@@ -329,37 +363,43 @@ map.on('baselayerchange', function (eventLayer) {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_STATUS;
         currentLayer = GMINA_STATUS;
+        searchControl.setLayer(currentLayer);
         LEGEND_STATUS.addTo(map);
     } else if (eventLayer.name === 'Gmina - koszt') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_COST;
         currentLayer = GMINA_COST;
+        searchControl.setLayer(currentLayer);
         LEGEND_COST.addTo(map);
     } else if (eventLayer.name === 'Gmina - na ucznia') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_PER_STUDENT;
         currentLayer = GMINA_PER_STUDENT;
+        searchControl.setLayer(currentLayer);
         LEGEND_PER_STUDENT.addTo(map);
     } else if (eventLayer.name === 'Gmina - na mieszkańca') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_PER_CITIZEN;
         currentLayer = GMINA_PER_CITIZEN;
+        searchControl.setLayer(currentLayer);
         LEGEND_PER_CITIZEN.addTo(map);
     } else if (eventLayer.name === 'Powiat - status') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_STATUS;
         currentLayer = POWIAT_STATUS;
+        searchControl.setLayer(currentLayer);
         LEGEND_STATUS.addTo(map);
     } else if (eventLayer.name === 'Powiat - koszt') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_COST;
         currentLayer = POWIAT_COST;
+        searchControl.setLayer(currentLayer);
         LEGEND_COST.addTo(map);
-        WOJEWODZTWO_LINES.bringToFront();
     } else if (eventLayer.name === 'Powiat - na ucznia') {
         map.removeControl(currentLegend);
         currentLegend = LEGEND_PER_STUDENT;
         currentLayer = POWIAT_PER_STUDENT;
+        searchControl.setLayer(currentLayer);
         LEGEND_PER_STUDENT.addTo(map);
     }
 });
@@ -477,8 +517,3 @@ map.fitBounds(GMINA_STATUS.getBounds(), {
     paddingTopLeft: [0, 60]
 });
 
-L.easyButton("fas fa-expand", function () {
-    map.fitBounds(GMINA_STATUS.getBounds(), {
-        paddingTopLeft: [0, 60]
-    });
-}).addTo(map);
