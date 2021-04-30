@@ -21,10 +21,10 @@ var POWIAT_PER_STUDENT = L.geoJson(powiaty, {style: stylePerStudent, onEachFeatu
 
 var CITIES = L.geoJson(cities, {pointToLayer: markerPointToLayer});
 
-map.createPane('lines');
-map.getPane('lines').style.zIndex = 401;
+map.createPane('lines_woj');
+map.getPane('lines_woj').style.zIndex = 402;
 
-var WOJEWODZTWO_LINES = L.geoJson(wojewodztwa_borders, {style: styleWojLines, pane: 'lines'}).addTo(map);
+var WOJEWODZTWO_LINES = L.geoJson(wojewodztwa_borders, {style: styleWojLines, pane: 'lines_woj'}).addTo(map);
 
 function styleWojLines() {
     return {
@@ -33,12 +33,15 @@ function styleWojLines() {
     }
 }
 
-var POWIAT_LINES;
+map.createPane('lines_pow');
+map.getPane('lines_pow').style.zIndex = 401;
+
+var POWIAT_LINES = L.geoJson(powiaty_borders, {style: stylePowLines, pane: 'lines_pow'}).addTo(map);
 
 function stylePowLines() {
     return {
-        color: BORDER_COLOR[1],
-        weight: 1
+        color: BORDER_COLOR[0],
+        weight: 0.5
     }
 }
 
@@ -351,7 +354,9 @@ var baseMaps = {
 };
 
 var overlayMaps = {
-    "Miasta": CITIES
+    "Miasta": CITIES,
+    "Powiaty": POWIAT_LINES,
+    "Województwa": WOJEWODZTWO_LINES
 };
 
 L.control.layers(baseMaps, overlayMaps, {
