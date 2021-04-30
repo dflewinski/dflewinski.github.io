@@ -310,9 +310,13 @@ L.easyButton("fas fa-expand", function () {
 var searchControl = new L.Control.Search({
     layer: currentLayer,
     propertyName: 'JPT_NAZWA_',
+    initial: false,
     marker: false,
+    minLength: 2,
     position: 'topleft',
-    textPlaceholder: 'Wpisz JST',
+    firstTipSubmit: true,
+    textPlaceholder: 'Nazwa JST',
+    textCancel: 'Anuluj',
     textErr: 'Nie znaleziono',
     moveToLocation: function (latlng, title, map) {
         //map.fitBounds( latlng.layer.getBounds() );
@@ -329,7 +333,7 @@ searchControl.on('search:locationfound', function (e) {
         currentLayer.resetStyle(layer);
     });
 });
-
+//
 // searchControl.on('keyup', function (e) {
 //     controlSearch.searchText(e.target.value);
 // })

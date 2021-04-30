@@ -1,40 +1,3 @@
-/*
-	Name					Data passed			   Description
-
-	Managed Events:
-	 search:locationfound	{latlng, title, layer} fired after moved and show markerLocation
-	 search:expanded		{}					   fired after control was expanded
-	 search:collapsed		{}					   fired after control was collapsed
- 	 search:cancel			{}					   fired after cancel button clicked
-
-	Public methods:
-	 setLayer()				L.LayerGroup()         set layer search at runtime
-	 showAlert()            'Text message'         show alert message
-	 searchText()			'Text searched'        search text by external code
-*/
-
-//TODO implement can do research on multiple sources layers and remote		
-//TODO history: false,		//show latest searches in tooltip		
-//FIXME option condition problem {autoCollapse: true, markerLocation: true} not show location
-//FIXME option condition problem {autoCollapse: false }
-//
-//TODO here insert function  search inputText FIRST in _recordsCache keys and if not find results.. 
-//  run one of callbacks search(sourceData,jsonpUrl or options.layer) and run this.showTooltip
-//
-//TODO change structure of _recordsCache
-//	like this: _recordsCache = {"text-key1": {loc:[lat,lng], ..other attributes.. }, {"text-key2": {loc:[lat,lng]}...}, ...}
-//	in this mode every record can have a free structure of attributes, only 'loc' is required
-//TODO important optimization!!! always append data in this._recordsCache
-//  now _recordsCache content is emptied and replaced with new data founded
-//  always appending data on _recordsCache give the possibility of caching ajax, jsonp and layersearch!
-//
-//TODO here insert function  search inputText FIRST in _recordsCache keys and if not find results.. 
-//  run one of callbacks search(sourceData,jsonpUrl or options.layer) and run this.showTooltip
-//
-//TODO change structure of _recordsCache
-//	like this: _recordsCache = {"text-key1": {loc:[lat,lng], ..other attributes.. }, {"text-key2": {loc:[lat,lng]}...}, ...}
-//	in this way every record can have a free structure of attributes, only 'loc' is required
-
 (function (factory) {
 	if(typeof define === 'function' && define.amd) {
 		//AMD
@@ -59,7 +22,6 @@
 			url: '',						//url for search by ajax request, ex: "search.php?q={s}". Can be function to returns string for dynamic parameter setting
 			layer: null,					//layer where search markers(is a L.LayerGroup)
 			sourceData: null,				//function to fill _recordsCache, passed searching text by first param and callback in second
-			//TODO implements uniq option 'sourceData' to recognizes source type: url,array,callback or layer
 			jsonpParam: null,				//jsonp param name for search by jsonp service, ex: "callback"
 			propertyLoc: 'loc',				//field for remapping location, using array: ['latname','lonname'] for select double fields(ex. ['lat','lon'] ) support dotted format: 'prop.subprop.title'
 			propertyName: 'title',			//property in marker.options(or feature.properties for vector layer) trough filter elements in layer,
@@ -425,7 +387,6 @@
 
 			regSearch = new RegExp(I + text, icase);
 
-			//TODO use .filter or .map
 			for(var key in records) {
 				if( regSearch.test(key) )
 					frecords[key]= records[key];
@@ -489,7 +450,6 @@
 			else
 				for(i in json)
 					jsonret[ self._getPath(json[i],propName) ]= L.latLng( self._getPath(json[i],propLoc) );
-			//TODO throw new Error("propertyName '"+propName+"' not found in JSON data");
 			return jsonret;
 		},
 
@@ -497,8 +457,6 @@
 			L.Control.Search.callJsonp = callAfter;
 			var script = L.DomUtil.create('script','leaflet-search-jsonp', document.getElementsByTagName('body')[0] ),
 				url = L.Util.template(this._getUrl(text)+'&'+this.options.jsonpParam+'=L.Control.Search.callJsonp', {s: text}); //parsing url
-			//rnd = '&_='+Math.floor(Math.random()*10000);
-			//TODO add rnd param or randomize callback name! in recordsFromJsonp
 			script.type = 'text/javascript';
 			script.src = url;
 			return { abort: function() { script.parentNode.removeChild(script); } };
@@ -517,9 +475,6 @@
 			var IE8or9 = ( L.Browser.ie && !window.atob && document.querySelector ),
 				request = IE8or9 ? new XDomainRequest() : new XMLHttpRequest(),
 				url = L.Util.template(this._getUrl(text), {s: text});
-
-			//rnd = '&_='+Math.floor(Math.random()*10000);
-			//TODO add rnd param or randomize callback name! in recordsFromAjax
 
 			request.open("GET", url);
 
@@ -623,7 +578,6 @@
 
 		_autoType: function() {
 
-			//TODO implements autype without selection(useful for mobile device)
 
 			var start = this._input.value.length,
 				firstRecord = this._tooltip.firstChild ? this._tooltip.firstChild._text : '',
@@ -752,9 +706,8 @@
 
 			L.DomUtil.addClass(this._container, 'search-load');
 
-			if(this.options.layer)
+			if(this._layer)
 			{
-				//TODO _recordsFromLayer must return array of objects, formatted from _formatData
 				this._recordsCache = this._recordsFromLayer();
 
 				records = this._filterData( this._input.value, this._recordsCache );
@@ -775,7 +728,6 @@
 
 					self._recordsCache = self._formatData.call(self, data);
 
-					//TODO refact!
 					if(self.options.sourceData)
 						records = self._filterData( self._input.value, self._recordsCache );
 					else
@@ -896,7 +848,6 @@
 			});
 
 			self._moveToLocation(latlng, title, self._map);
-			//FIXME autoCollapse option hide self._markerSearch before visualized!!
 			if(self.options.autoCollapse)
 				self.collapse();
 
@@ -965,7 +916,6 @@
 		},
 
 		animate: function() {
-			//TODO refact animate() more smooth! like this: http://goo.gl/DDlRs
 			if(this._circleLoc)
 			{
 				var circle = this._circleLoc,
@@ -989,7 +939,6 @@
 						circle.setRadius(oldrad);//reset radius
 						//if(typeof afterAnimCall == 'function')
 						//afterAnimCall();
-						//TODO use create event 'animateEnd' in L.Control.Search.Marker
 					}
 				}, tInt);
 			}
@@ -1012,5 +961,4 @@
 	return L.Control.Search;
 
 });
-
 
