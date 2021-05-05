@@ -36,7 +36,7 @@ function styleWojLines() {
 map.createPane('lines_pow');
 map.getPane('lines_pow').style.zIndex = 401;
 
-var POWIAT_LINES = L.geoJson(powiaty_borders, {style: stylePowLines, pane: 'lines_pow'}).addTo(map);
+var POWIAT_LINES = L.geoJson(powiaty_borders, {style: stylePowLines, pane: 'lines_pow'});
 
 function stylePowLines() {
     return {
