@@ -314,7 +314,7 @@ var baseMaps = {
 };
 
 var overlayMaps = {
-    "Miasta": CITIES
+    // "Miasta": CITIES
 };
 
 L.control.layers(baseMaps, overlayMaps, {
