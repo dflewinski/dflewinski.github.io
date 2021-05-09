@@ -220,8 +220,15 @@ LEGEND_PER_STUDENT.onAdd = function (map) {
 
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [801, 701, 601, 501, 401, 301, 201, 51, 0],
-        labels = ['> 800 zł/os', '800 - 700 zł/os', '700 - 600 zł/os', '600 - 500 zł/os', '500 - 400 zł/os', '400 - 300 zł/os', '300 - 200 zł/os', '< 200 zł/os', 'Brak danych'];
-
+        labels = ['≥ 800 zł/os',
+            '< 800 zł/os',
+            '< 700 zł/os',
+            '< 600 zł/os',
+            '< 500 zł/os',
+            '< 400 zł/os',
+            '< 300 zł/os',
+            '< 200 zł/os',
+            'Brak danych'];
     div.innerHTML += '<div><b>Roczny koszt na jednego ucznia</b></div><br>'
 
     // loop through our density intervals and generate a label with a colored square for each interval
@@ -248,13 +255,13 @@ LEGEND_COST.onAdd = function (map) {
             51,
             0],
         labels = [
-            '> 1 200 000 zł',
-            '1 200 000 - 1 000 000 zł',
-            '1 000 000 - 800 000 zł',
-            '800 000 - 600 000 zł',
-            '600 000 - 400 000 zł',
-            '400 000 - 200 000 zł',
-            '200 000 - 100 000 zł',
+            '≥ 1 200 000 zł',
+            '< 1 200 000 zł',
+            '< 1 000 000 zł',
+            '< 800 000 zł',
+            '< 600 000 zł',
+            '< 400 000 zł',
+            '< 200 000 zł',
             '< 100 000 zł',
             'Brak danych'];
 
@@ -283,13 +290,13 @@ LEGEND_PER_CITIZEN.onAdd = function (map) {
             1,
             0],
         labels = [
-            '> 70,00 zł',
-            '70,00 zł - 60,00 zł',
-            '60,00 zł - 50,00 zł',
-            '50,00 zł - 40,00 zł',
-            '40,00 zł - 30,00 zł',
-            '30,00 zł - 20,00 zł',
-            '20,00 zł - 10,00 zł',
+            '≥ 70,00 zł',
+            '< 70,00 zł',
+            '< 60,00 zł',
+            '< 50,00 zł',
+            '< 40,00 zł',
+            '< 30,00 zł',
+            '< 20,00 zł',
             '< 10,00 zł',
             'Brak danych'];
 
