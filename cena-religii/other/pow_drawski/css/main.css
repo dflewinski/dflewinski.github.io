@@ -302,3 +302,13 @@ button {
     z-index: 100;
     transform: translate(-50%,-50%);
 }
+
+.leaflet-popup-tip {
+     width: 0px;
+     height: 0px;
+     padding: 0px;
+}
+
+.leaflet-popup-content {
+    margin: 8px;
+}

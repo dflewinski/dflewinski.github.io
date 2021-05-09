@@ -405,10 +405,10 @@ function getDescriptionPopup(feature) {
     content += getDescription(feature);
 
     if ((feature.properties.subvention && feature.properties.subvention !== " ") || (feature.properties.gminaCost && feature.properties.gminaCost !== " ") || feature.properties.link.length > 0) {
-        content += '<br>';
+        // content += '<br>';
         if (feature.properties.subvention) {
             if (feature.properties.subvention !== " ") {
-                content += '<div><b>Kwota subwencji oświatowej: </b>' + parseFloat(feature.properties.subvention).toLocaleString(undefined) + ' zł</div>';
+                content += '<br><div><b>Kwota subwencji oświatowej: </b>' + parseFloat(feature.properties.subvention).toLocaleString(undefined) + ' zł</div>';
             }
         }
 
