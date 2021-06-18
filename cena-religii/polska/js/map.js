@@ -424,7 +424,7 @@ function getDescription(feature) {
     var content = '';
     content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>';
     if (feature.properties.price) {
-        content += '<div><b>Kwota przeznaczona na lekcje relgii:</b></div><div class="tooltip">' + parseFloat(feature.properties.price).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' zł</div>';
+        content += '<div><b>Kwota przeznaczona na lekcje religii:</b></div><div class="tooltip">' + parseFloat(feature.properties.price).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' zł</div>';
     }
 
     if (feature.properties.populate) {
