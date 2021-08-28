@@ -35,21 +35,21 @@
 			initial: true,					//search elements only by initial text
 			casesensitive: false,			//search elements in case sensitive text
 			autoType: true,					//complete input with first suggested result and select this filled-in text.
-			delayType: 400,					//delay while typing for show tooltip
+			delayType: 200,					//delay while typing for show tooltip
 			tooltipLimit: -1,				//limit max results to show in tooltip. -1 for no limit, 0 for no results
 			tipAutoSubmit: true,			//auto map panTo when click on tooltip
 			firstTipSubmit: false,			//auto select first result con enter click
 			autoResize: true,				//autoresize on input change
 			collapsed: true,				//collapse search control at startup
-			autoCollapse: false,			//collapse search control after submit(on button or on tips if enabled tipAutoSubmit)
+			autoCollapse: true,			//collapse search control after submit(on button or on tips if enabled tipAutoSubmit)
 			autoCollapseTime: 1200,			//delay for autoclosing alert and collapse after blur
-			textErr: 'Location not found',	//error message
-			textCancel: 'Cancel',		    //title in cancel button
-			textPlaceholder: 'Search...',   //placeholder value
+			textErr: 'Nie znaleziono',	//error message
+			textCancel: 'Anuluj',		    //title in cancel button
+			textPlaceholder: 'Wyszukaj samorząd',   //placeholder value
 			hideMarkerOnCollapse: false,    //remove circle and marker on search control collapsed
 			position: 'topleft',
 			marker: {						//custom L.Marker or false for hide
-				icon: false,				//custom L.Icon for maker location or false for hide
+				icon: true,				//custom L.Icon for maker location or false for hide
 				animate: true,				//animate a circle over location found
 				circle: {					//draw a circle in location found
 					radius: 10,
