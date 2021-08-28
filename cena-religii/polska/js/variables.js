@@ -61,11 +61,11 @@ var LEGENDPALETTE8 = [
 ]
 
 var infoText = {
-    title: "Koszty lekcji religii w jednostkach samorządu terytorialnego",
-    content: "Zawiera koszty ponoszone na wynagrodzenia katechetów w placówkach prowadzonych przez samorządy (o ile " +
+    title: "Koszty lekcji religii w jednostkach samorządu terytorialnego w roku szkolnym 2019/2020",
+    content: "Zestawienie zawiera koszty ponoszone na wynagrodzenia katechetów w placówkach prowadzonych przez samorządy (o ile " +
         "nie wspomniano inaczej). Wartość \"liczba uczniów\" obejmuje uczniów i przedszkolaków uczęszczających do placówek " +
         "prowadzonych przez JST, zadeklarowaną przez MEN (patrz źródła).",
-    dataSource:'Jeżeli posiadasz odpowiedzi urzędów i chcesz nimi się podzielić, skontaktuj się z twórcą mapy.'
+    dataSource:''
 }
 
 var footerText = {

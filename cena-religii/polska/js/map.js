@@ -343,10 +343,7 @@ searchControl.on('search:locationfound', function (e) {
         currentLayer.resetStyle(layer);
     });
 });
-//
-// searchControl.on('keyup', function (e) {
-//     controlSearch.searchText(e.target.value);
-// })
+
 
 map.addControl(searchControl);  //inizialize search control
 
