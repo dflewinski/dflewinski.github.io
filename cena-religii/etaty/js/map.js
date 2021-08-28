@@ -1,0 +1,170 @@
+var map = L.map('mapid', {
+    renderer: L.canvas(
+        {padding: 0.4}
+    )
+}).setView([54.186, 18.031], 7);
+
+var WOJEWODZTWA = L.geoJson(data, {style: style, onEachFeature: onEachFeature}).addTo(map);
+
+L.easyButton("fas fa-expand", function () {
+    map.fitBounds(WOJEWODZTWA.getBounds(), {
+        paddingTopLeft: [0, 60]
+    });
+}).addTo(map);
+
+map.fitBounds(WOJEWODZTWA.getBounds(), {
+    paddingTopLeft: [0, 60]
+});
+
+function style(feature) {
+    return {
+        weight: 0.3,
+        opacity: 1,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7,
+        fillColor: getColor(1)
+    };
+}
+
+function getColor(d) {
+    return '#aaaaaa';
+}
+
+var hoverStyle = {
+    weight: 3,
+    color: '#838383',
+    dashArray: '',
+    fillOpacity: 0.7
+};
+
+function onEachFeature(feature, layer) {
+    layer.on('mouseover', function (f, l) {
+        layer.setStyle(hoverStyle);
+        if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+            layer.bringToFront();
+        }
+    })
+
+    layer.on('mouseout', function (f, l) {
+        WOJEWODZTWA.resetStyle(layer);
+    });
+
+    // layer.bindPopup(getDescriptionPopup(feature));
+    layer.bindTooltip(getDescription(feature));
+}
+
+function hideLegend() {
+    return function (event, ui) {
+        var act = $("#accordion").accordion("option", "active");
+        // console.log(act);
+
+        if (act === false) {
+            $(".legend").css("opacity", 0);
+        } else {
+            $(".legend").css("opacity", 1);
+        }
+    };
+}
+
+var info = L.control();
+
+function infoDescriptionOnCreate() {
+    var result = '<div id="accordion">\n' +
+        '  <h4 style="font-weight: bold">' + infoText.title + '</h4>' +
+        '  <div>' +
+        '<p>' + infoText.content + '</p>' +
+        '<p>' + infoText.dataSource + '</p>';
+
+    result = result +
+        '<div>Źródła:</div>' +
+        '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
+        '<div><a href="https://stat.gov.pl/obszary-tematyczne/ludnosc/ludnosc/powierzchnia-i-ludnosc-w-przekroju-terytorialnym-w-2019-roku,7,16.html">Ludność.</a></div>' +
+        '</div>';
+    return result;
+}
+
+$(function () {
+    $("#accordion").accordion({
+        collapsible: true,
+        active: false,
+        beforeActivate: hideLegend()
+    });
+});
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this._div.id = 'infobox';
+    this._div.innerHTML = infoDescriptionOnCreate();
+    return this._div;
+};
+
+info.addTo(map);
+
+L.tileLayer('', {
+    attribution: footerText.datasource + footerText.separator + footerText.creator,
+}).addTo(map);
+
+function getDescription(feature) {
+    let content = '';
+    content += '<h3>' + feature.properties.JPT_NAZWA_.toUpperCase() + '</h3>';
+
+    content += '<table> ';
+    content += '<tr>';
+    content += "<th>Przedmiot</th>";
+    content += "<th>Etaty</th>";
+    content += "<th>Nauczyciele</th>";
+    content += '</tr>';
+
+    content += "<tr>";
+    content += "<td>Religia</td>";
+    content += "<td>" + feature.properties.lectures['religia'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['religia'].teachers + "</td>";
+    content += '</tr>';
+
+    content += "<tr>";
+    content += "<td>Etyka</td>";
+    content += "<td>" + feature.properties.lectures['etyka'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['etyka'].teachers + "</td>";
+    content += '</tr>';
+
+    content += "<tr>";
+    content += "<td>Język polski</td>";
+    content += "<td>" + feature.properties.lectures['język polski'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['język polski'].teachers + "</td>";
+    content += '</tr>';
+
+    content += "<tr>";
+    content += "<td>Matematyka</td>";
+    content += "<td>" + feature.properties.lectures['matematyka'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['matematyka'].teachers + "</td>";
+    content += '</tr>';
+
+    content += "<tr>";
+    content += "<td>Fizyka</td>";
+    content += "<td>" + feature.properties.lectures['fizyka'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['fizyka'].teachers + "</td>";
+    content += '</tr>';
+
+    content += "<tr>";
+    content += "<td>Biologia</td>";
+    content += "<td>" + feature.properties.lectures['biologia'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['biologia'].teachers + "</td>";
+    content += '</tr>';
+
+    content += "<tr>";
+    content += "<td>Historia</td>";
+    content += "<td>" + feature.properties.lectures['historia'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['historia'].teachers + "</td>";
+    content += '</tr>';
+
+    content += "<tr>";
+    content += "<td>Język angielski</td>";
+    content += "<td>" + feature.properties.lectures['język angielski'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['język angielski'].teachers + "</td>";
+    content += '</tr>';
+
+    content += '</table>';
+    return content;
+}
+
