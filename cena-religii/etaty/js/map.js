@@ -16,19 +16,22 @@ map.fitBounds(WOJEWODZTWA.getBounds(), {
     paddingTopLeft: [0, 60]
 });
 
-function style(feature) {
-    return {
-        weight: 0.3,
-        opacity: 1,
-        color: 'white',
-        dashArray: '3',
-        fillOpacity: 0.7,
-        fillColor: getColor(1)
-    };
+function getColorPerJobs(jobs) {
+    return jobs > 2800 ? LEGENDPALETTE8[0] :
+        jobs > 2200 ? LEGENDPALETTE8[1] :
+            jobs > 1800 ? LEGENDPALETTE8[2] :
+                jobs > 1400 ? LEGENDPALETTE8[3] :
+                    jobs > 1000 ? LEGENDPALETTE8[6] :
+                        jobs > 600 ? LEGENDPALETTE8[7] :
+                            LEGENDPALETTE8[8];
 }
 
-function getColor(d) {
-    return '#aaaaaa';
+function style(feature) {
+    return {
+        color: '#838383',
+        fillOpacity: 0.7,
+        fillColor: getColorPerJobs(feature.properties.lectures['religia'].jobs)
+    };
 }
 
 var hoverStyle = {
@@ -78,8 +81,7 @@ function infoDescriptionOnCreate() {
 
     result = result +
         '<div>Źródła:</div>' +
-        '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
-        '<div><a href="https://stat.gov.pl/obszary-tematyczne/ludnosc/ludnosc/powierzchnia-i-ludnosc-w-przekroju-terytorialnym-w-2019-roku,7,16.html">Ludność.</a></div>' +
+        '<div><a href="https://dane.gov.pl/pl/dataset/811,nauczyciele-w-osobach-i-etatach/resource/18645/table">Nauczyciele w osobach i etatach (dane.gov.pl)</a></div>' +
         '</div>';
     return result;
 }
@@ -167,4 +169,3 @@ function getDescription(feature) {
     content += '</table>';
     return content;
 }
-
