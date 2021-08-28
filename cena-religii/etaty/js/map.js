@@ -17,13 +17,15 @@ map.fitBounds(WOJEWODZTWA.getBounds(), {
 });
 
 function getColorPerJobs(jobs) {
-    return jobs > 2800 ? LEGENDPALETTE8[0] :
-        jobs > 2200 ? LEGENDPALETTE8[1] :
-            jobs > 1800 ? LEGENDPALETTE8[2] :
-                jobs > 1400 ? LEGENDPALETTE8[3] :
-                    jobs > 1000 ? LEGENDPALETTE8[6] :
-                        jobs > 600 ? LEGENDPALETTE8[7] :
-                            LEGENDPALETTE8[8];
+    return jobs > 2700 ? LEGENDPALETTE8[0] :
+        jobs > 2400 ? LEGENDPALETTE8[1] :
+            jobs > 2100 ? LEGENDPALETTE8[2] :
+                jobs > 1800 ? LEGENDPALETTE8[3] :
+                    jobs > 1500 ? LEGENDPALETTE8[4] :
+                        jobs > 1200 ? LEGENDPALETTE8[5] :
+                            jobs > 900 ? LEGENDPALETTE8[6] :
+                                jobs > 600 ? LEGENDPALETTE8[7] :
+                                    LEGENDPALETTE8[8];
 }
 
 function style(feature) {
@@ -70,6 +72,14 @@ function hideLegend() {
     };
 }
 
+$(function () {
+    $("#accordion").accordion({
+        collapsible: true,
+        active: false,
+        beforeActivate: hideLegend()
+    });
+});
+
 var info = L.control();
 
 function infoDescriptionOnCreate() {
@@ -86,14 +96,6 @@ function infoDescriptionOnCreate() {
     return result;
 }
 
-$(function () {
-    $("#accordion").accordion({
-        collapsible: true,
-        active: false,
-        beforeActivate: hideLegend()
-    });
-});
-
 info.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
     this._div.id = 'infobox';
@@ -102,6 +104,32 @@ info.onAdd = function (map) {
 };
 
 info.addTo(map);
+
+var LEGEND = L.control({position: "bottomright"});
+LEGEND.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        grades = [2701, 2401, 2101, 1801, 1501, 1201, 901, 601],
+        labels = ['≥ 2700',
+            '< 2700',
+            '< 2400',
+            '< 2100',
+            '< 1800',
+            '< 1500',
+            '< 1200',
+            '< 900'];
+    div.innerHTML += '<div><b>Liczba etatów n. religii</b></div><br>'
+
+    // loop through our density intervals and generate a label with a colored square for each interval
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+            '<i style="opacity: 0.7; background:' + getColorPerJobs(grades[i]) + '"></i> ' +
+            labels[i] + '<br>';
+    }
+    return div;
+};
+
+LEGEND.addTo(map);
 
 L.tileLayer('', {
     attribution: footerText.datasource + footerText.separator + footerText.creator,
