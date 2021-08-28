@@ -29,7 +29,7 @@ function getColorPerJobs(jobs) {
 function style(feature) {
     return {
         color: '#838383',
-        fillOpacity: 0.7,
+        fillOpacity: 0.4,
         fillColor: getColorPerJobs(feature.properties.lectures['religia'].jobs)
     };
 }
