@@ -43,20 +43,46 @@ var hoverStyle = {
     fillOpacity: 0.7
 };
 
+function makeDraggable(popup){
+    var pos = map.latLngToLayerPoint(popup.getLatLng());
+    L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
+    var draggable = new L.Draggable(popup._container, popup._wrapper);
+    draggable.enable();
+
+    draggable.on('dragend', function() {
+        var pos = map.layerPointToLatLng(this._newPos);
+        popup.setLatLng(pos);
+    });
+}
+
 function onEachFeature(feature, layer) {
     layer.on('mouseover', function (f, l) {
+        if (layer.isPopupOpen()) {
+            layer.closeTooltip();
+        }
         layer.setStyle(hoverStyle);
         if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
             layer.bringToFront();
         }
     })
 
+    layer.on('popupopen', function (){
+        makeDraggable(popup)
+    });
+
     layer.on('mouseout', function (f, l) {
         WOJEWODZTWA.resetStyle(layer);
     });
 
-    // layer.bindPopup(getDescriptionPopup(feature));
+    layer.on('click', function (f, l) {
+        layer.closeTooltip();
+    });
+
+    let popup = L.popup({autoClose: false, closeOnClick:false})
+        .setContent(getDescription(feature));
+
     layer.bindTooltip(getDescription(feature));
+    layer.bindPopup(popup)
 }
 
 function hideLegend() {
@@ -136,6 +162,7 @@ L.tileLayer('', {
 }).addTo(map);
 
 function getDescription(feature) {
+
     let content = '';
     content += '<h3>' + feature.properties.JPT_NAZWA_.toUpperCase() + '</h3>';
 
@@ -197,3 +224,4 @@ function getDescription(feature) {
     content += '</table>';
     return content;
 }
+
