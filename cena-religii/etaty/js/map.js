@@ -31,7 +31,7 @@ function getColorPerJobs(jobs) {
 function style(feature) {
     return {
         color: '#838383',
-        fillOpacity: 0.4,
+        fillOpacity: 0.5,
         fillColor: getColorPerJobs(feature.properties.lectures['religia'].jobs)
     };
 }
@@ -68,6 +68,7 @@ function onEachFeature(feature, layer) {
 
     layer.on('popupopen', function (){
         makeDraggable(popup)
+        layer.closeTooltip();
     });
 
     layer.on('mouseout', function (f, l) {
