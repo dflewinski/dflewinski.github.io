@@ -327,3 +327,7 @@ td {
 .leaflet-popup-content {
     margin: 8px;
 }
+
+@media (hover: none) {
+    .leaflet-tooltip-pane { display: none; }
+}
