@@ -348,11 +348,11 @@ searchControl.on('search:locationfound', function (e) {
 map.addControl(searchControl);  //inizialize search control
 
 var baseMaps = {
-    "Gmina - status": GMINA_STATUS,
+    // "Gmina - status": GMINA_STATUS,
     "Gmina - koszt": GMINA_COST,
     "Gmina - na ucznia": GMINA_PER_STUDENT,
     "Gmina - na mieszkańca": GMINA_PER_CITIZEN,
-    "Powiat - status": POWIAT_STATUS,
+    // "Powiat - status": POWIAT_STATUS,
     "Powiat - koszt": POWIAT_COST,
     "Powiat - na ucznia": POWIAT_PER_STUDENT
 };
