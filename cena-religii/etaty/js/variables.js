@@ -8,8 +8,8 @@ var infoText = {
 }
 
 var footerText = {
-    datasource:'',
-    separator:'',
+    datasource:'<a href="../#grupy">Dołącz do grup świeckiej szkoły</a>',
+    separator:' \ ',
     creator:'<a href="https://www.facebook.com/profile.php?id=100000663068342">Wizualizacja - DFL</a>'
 }
 
