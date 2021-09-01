@@ -2,7 +2,7 @@
 var map = L.map('mapid', {
     renderer: L.canvas(
         {padding: 0.7}
-        )
+    )
 }).setView([54.186, 18.031], 7);
 
 map.options.minZoom = minZoom;
@@ -34,7 +34,7 @@ gminyData.features.forEach(function (feature) {
 
     // let stud = parseFloat(feature.properties.students)
     // if(!isNaN(stud)) {
-        totalStudent += parseFloat(feature.properties.students);
+    totalStudent += parseFloat(feature.properties.students);
     // }
 
     if (feature.properties.status == 3) {
@@ -46,11 +46,11 @@ gminyData.features.forEach(function (feature) {
             }
         }
         answersJST++;
-    } else if (feature.properties.status == 0){
+    } else if (feature.properties.status == 0) {
         answersJST++;
-    } else if(feature.properties.status == 1){
+    } else if (feature.properties.status == 1) {
         answersJST++;
-    } else if (feature.properties.status == 'BRAK'){
+    } else if (feature.properties.status == 'BRAK') {
         answersJST++;
     }
 })
@@ -85,29 +85,30 @@ function infoDescriptionOnCreate() {
         '  <div>' +
         '<p>' + infoText.content + '</p>' +
         '<p>' + infoText.dataSource + '</p>' +
-        '<p>' + "Opracowane JST: " + readyJST.toLocaleString(undefined) + "("+ answersJST.toLocaleString(undefined) + ")/" + totalJST.toLocaleString(undefined) + ' (' +(readyJST/totalJST*100).toLocaleString(undefined, {maximumFractionDigits: 1})+'%)'+'</p>';
+        '<p>' + "Opracowane JST: " + readyJST.toLocaleString(undefined) + "(" + answersJST.toLocaleString(undefined) + ")/" + totalJST.toLocaleString(undefined) + ' (' + (readyJST / totalJST * 100).toLocaleString(undefined, {maximumFractionDigits: 1}) + '%)' + '</p>';
 
-    if(!isNaN(totalStudent)) {
+    if (!isNaN(totalStudent)) {
         result = result +
-            '<p>' + "Uczniowie: " + readyStudent.toLocaleString(undefined) + "/" + totalStudent.toLocaleString(undefined) + ' (' +(readyStudent/totalStudent*100).toLocaleString(undefined, {maximumFractionDigits: 1})+'%)'+ '</p>';
+            '<p>' + "Uczniowie: " + readyStudent.toLocaleString(undefined) + "/" + totalStudent.toLocaleString(undefined) + ' (' + (readyStudent / totalStudent * 100).toLocaleString(undefined, {maximumFractionDigits: 1}) + '%)' + '</p>';
     }
 
     result = result +
         '<p>' + "Koszt w opracowanych JST: " + parseFloat(readyCost.toString()).toLocaleString(undefined, {minimumFractionDigits: 2}) + " zł" + '</p>';
 
-    if(!isNaN(totalStudent)) {
-        if(readyStudent != 0) {
+    if (!isNaN(totalStudent)) {
+        if (readyStudent != 0) {
             // if(readyStudent!=totalStudent) {
-                result = result +
-                    '<p>' + "Przewidywane całkowite wydatki: " + parseFloat((totalStudent * readyCost / readyStudent).toString()).toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                    }) + ' zł</p>';
+            result = result +
+                '<p>' + "Przewidywane całkowite wydatki: " + parseFloat((totalStudent * readyCost / readyStudent).toString()).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }) + ' zł</p>';
             // }
         }
     }
 
     result = result +
+        '<p><a href="..">Strona główna - cenareligii.pl</a></p>' +
         '<div>Źródła:</div>' +
         '<div><a href="https://dane.gov.pl/pl/dataset/288,dane-jednostkowe-przedszkoli-szko-i-placowek-oswiatowych-w-latach-2012-2018/resource/26041/table">Liczba uczniów w szkołach.</a></div>' +
         '<div><a href="https://stat.gov.pl/obszary-tematyczne/ludnosc/ludnosc/powierzchnia-i-ludnosc-w-przekroju-terytorialnym-w-2019-roku,7,16.html">Ludność.</a></div>' +
