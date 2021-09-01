@@ -75,7 +75,8 @@ function infoDescriptionOnCreate() {
         '  <h4 style="font-weight: bold">' + infoText.title + '</h4>' +
         '  <div>' +
         '<p>' + infoText.content + '</p>' +
-        '<p>' + infoText.dataSource + '</p>';
+        '<p>' + infoText.dataSource + '</p>' +
+        '<p><a href="..">Strona główna - cenareligii.pl</a></p>';
 
     result = result +
         '<div>Źródła:</div>' +

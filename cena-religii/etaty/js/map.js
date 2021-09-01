@@ -43,13 +43,13 @@ var hoverStyle = {
     fillOpacity: 0.7
 };
 
-function makeDraggable(popup){
+function makeDraggable(popup) {
     var pos = map.latLngToLayerPoint(popup.getLatLng());
     L.DomUtil.setPosition(popup._wrapper.parentNode, pos);
     var draggable = new L.Draggable(popup._container, popup._wrapper);
     draggable.enable();
 
-    draggable.on('dragend', function() {
+    draggable.on('dragend', function () {
         var pos = map.layerPointToLatLng(this._newPos);
         popup.setLatLng(pos);
     });
@@ -66,7 +66,7 @@ function onEachFeature(feature, layer) {
         }
     })
 
-    layer.on('popupopen', function (){
+    layer.on('popupopen', function () {
         makeDraggable(popup)
         layer.closeTooltip();
     });
@@ -79,7 +79,7 @@ function onEachFeature(feature, layer) {
         layer.closeTooltip();
     });
 
-    let popup = L.popup({autoClose: false, closeOnClick:false})
+    let popup = L.popup({autoClose: false, closeOnClick: false})
         .setContent(getDescription(feature));
 
     layer.bindTooltip(getDescription(feature));
@@ -114,7 +114,8 @@ function infoDescriptionOnCreate() {
         '  <h4 style="font-weight: bold">' + infoText.title + '</h4>' +
         '  <div>' +
         '<p>' + infoText.content + '</p>' +
-        '<p>' + infoText.dataSource + '</p>';
+        '<p>' + infoText.dataSource + '</p>' +
+        '<p><a href="..">Strona główna - cenareligii.pl</a></p>';
 
     result = result +
         '<div>Źródła:</div>' +
