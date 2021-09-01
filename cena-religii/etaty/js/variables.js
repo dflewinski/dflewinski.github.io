@@ -9,7 +9,7 @@ var infoText = {
 
 var footerText = {
     datasource:'<a href="../#grupy">Dołącz do grup świeckiej szkoły</a>',
-    separator:' \ ',
+    separator:' | ',
     creator:'<a href="https://www.facebook.com/profile.php?id=100000663068342">Wizualizacja - DFL</a>'
 }
 

@@ -223,6 +223,12 @@ function getDescription(feature) {
     content += "<td>" + feature.properties.lectures['język angielski'].teachers + "</td>";
     content += '</tr>';
 
+    content += "<tr>";
+    content += "<td>Wychowanie fizyczne</td>";
+    content += "<td>" + feature.properties.lectures['wychowanie fizyczne'].jobs + "</td>";
+    content += "<td>" + feature.properties.lectures['wychowanie fizyczne'].teachers + "</td>";
+    content += '</tr>';
+
     content += '</table>';
     return content;
 }
