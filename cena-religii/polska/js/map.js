@@ -11,9 +11,9 @@ map.options.zoomDelta = zoomDelta;
 map.options.wheelPxPerZoomLevel = wheelPxPerZoomLevel;
 
 var GMINA_STATUS = L.geoJson(gminy, {style: styleStatus, onEachFeature: onEachFeature});
-var GMINA_COST = L.geoJson(gminy, {style: styleCost, onEachFeature: onEachFeature}).addTo(map);
+var GMINA_COST = L.geoJson(gminy, {style: styleCost, onEachFeature: onEachFeature});
 var GMINA_PER_CITIZEN = L.geoJson(gminy, {style: stylePerCitizen, onEachFeature: onEachFeature});
-var GMINA_PER_STUDENT = L.geoJson(gminy, {style: stylePerStudent, onEachFeature: onEachFeature});
+var GMINA_PER_STUDENT = L.geoJson(gminy, {style: stylePerStudent, onEachFeature: onEachFeature}).addTo(map);
 
 var POWIAT_STATUS = L.geoJson(powiaty, {style: styleStatus, onEachFeature: onEachFeature});
 var POWIAT_COST = L.geoJson(powiaty, {style: styleCost, onEachFeature: onEachFeature});
@@ -45,7 +45,7 @@ function stylePowLines() {
     }
 }
 
-var currentLayer = GMINA_COST; //for reset style for each method
+var currentLayer = GMINA_PER_STUDENT; //for reset style for each method
 
 function hideLegend() {
     return function (event, ui) {
@@ -365,12 +365,12 @@ var overlayMaps = {
 };
 
 L.control.layers(baseMaps, overlayMaps, {
-    collapsed: true,
+    collapsed: false,
     position: 'topright'
 }).addTo(map);
 
-LEGEND_COST.addTo(map);
-var currentLegend = LEGEND_COST;
+LEGEND_PER_STUDENT.addTo(map);
+var currentLegend = LEGEND_PER_STUDENT;
 
 map.on('baselayerchange', function (eventLayer) {
     if (eventLayer.name === "Gmina - status") {
