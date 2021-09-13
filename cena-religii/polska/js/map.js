@@ -418,9 +418,15 @@ map.on('baselayerchange', function (eventLayer) {
     }
 });
 
+function copyLinkToClipboard(jstCode){
+    console.log(jstCode);
+    let url = location.protocol + '//' + location.host + location.pathname + "?jst=" + jstCode;
+
+    navigator.clipboard.writeText(url);
+}
+
 function getDescription(feature) {
     var content = '';
-    content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>';
     if (feature.properties.price) {
         content += '<div><b>Kwota przeznaczona na lekcje religii:</b></div><div class="tooltip">' + parseFloat(feature.properties.price).toLocaleString(undefined, {minimumFractionDigits: 2}) + ' zł</div>';
     }
@@ -454,8 +460,17 @@ function getDescription(feature) {
     return content;
 }
 
+function getDescriptionTooltip(feature){
+    let content = '';
+    content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>';
+    content += getDescription(feature);
+
+    return content;
+}
+
 function getDescriptionPopup(feature) {
     var content = '';
+    content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>' + '<button style="border: none" onClick="copyLinkToClipboard('+feature.properties.JPT_KOD_JE+')">🔗︁</button>';
     content += getDescription(feature);
 
     if ((feature.properties.subvention && feature.properties.subvention !== " ") || (feature.properties.gminaCost && feature.properties.gminaCost !== " ") || feature.properties.link.length > 0) {
@@ -490,7 +505,7 @@ var temppopup = 0;
 //for each features methods
 function onEachFeature(feature, layer) {
     layer.bindPopup(getDescriptionPopup(feature));
-    layer.bindTooltip(getDescription(feature));
+    layer.bindTooltip(getDescriptionTooltip(feature));
 
     layer.on('mouseover', function (f, l) {
         layer.setStyle(hoverStyle);
@@ -531,3 +546,16 @@ map.fitBounds(GMINA_STATUS.getBounds(), {
     paddingTopLeft: [0, 60]
 });
 
+let queryString = window.location.search;
+let urlParams = new URLSearchParams(queryString);
+
+let jst = urlParams.get('jst');
+
+if(jst !== null) {
+    GMINA_PER_STUDENT.eachLayer(function (layer){
+        if(layer.feature.properties.JPT_KOD_JE == jst){
+            map.fitBounds(layer.getBounds());
+            layer.fire('click');
+        }
+    })
+}
