@@ -470,7 +470,7 @@ function getDescriptionTooltip(feature){
 
 function getDescriptionPopup(feature) {
     var content = '';
-    content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>' + '<button style="border: none" onClick="copyLinkToClipboard('+feature.properties.JPT_KOD_JE+')">🔗︁</button>';
+    content += '<h3>' + feature.properties.JPT_NAZWA_ + '</h3>' + '<button style="border: none" onClick="copyLinkToClipboard(\'' + feature.properties.JPT_KOD_JE + '\')">🔗︁</button>';
     content += getDescription(feature);
 
     if ((feature.properties.subvention && feature.properties.subvention !== " ") || (feature.properties.gminaCost && feature.properties.gminaCost !== " ") || feature.properties.link.length > 0) {
