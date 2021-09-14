@@ -425,6 +425,16 @@ function copyLinkToClipboard(jstCode){
     navigator.clipboard.writeText(url);
 }
 
+function setUrlWithParam(feature) {
+    let newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?jst=' + feature.properties.JPT_KOD_JE;
+    window.history.pushState({path: newUrl}, '', newUrl);
+}
+
+function setUrlWithoutParam(){
+    let newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+    window.history.pushState({path: newUrl}, '', newUrl);
+}
+
 function getDescription(feature) {
     var content = '';
     if (feature.properties.price) {
@@ -522,10 +532,12 @@ function onEachFeature(feature, layer) {
 
     layer.on('popupopen', function (f, l) {
         temppopup = 1;
+        setUrlWithParam(feature);
     });
 
     layer.on('popupclose', function (f, l) {
         temppopup = 0;
+        setUrlWithoutParam();
     });
 
     layer.on('mouseout', function (f, l) {
