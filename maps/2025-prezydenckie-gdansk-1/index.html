@@ -92,6 +92,18 @@
 				popup._contentNode.classList.remove('media');
 			}
 		}
+        var filtering = new L.control({'position':'bottomright'});
+
+        filtering.onAdd = function (map){
+            this._div = L.DomUtil.create('div', 'info');
+            this._div.id = 'menu';
+            L.DomEvent.disableClickPropagation(this._div);
+            this.update();
+            return this._div;
+        }
+        filtering.update = function () {
+        };
+        filtering.addTo(map);
         var title = new L.Control({'position':'topright'});
         title.onAdd = function (map) {
             this._div = L.DomUtil.create('div', 'info');
@@ -99,7 +111,7 @@
             return this._div;
         };
         title.update = function () {
-            this._div.innerHTML = '<h2>Wynik Adriana Zandberga w 1. turze w wyborach prezydenckich 2025 w Gdańsku w komisjach.</h2>';
+            this._div.innerHTML = '<h2>Wynik Adriana Zandberga w 1. turze w wyborach prezydenckich 2025 w gdańskich komisjach.</h2>';
         };
         title.addTo(map);
         var zoomControl = L.control.zoom({
@@ -336,15 +348,10 @@
         col1.className="col9";
         col1.id = "mapWindow";
         col1.style.height = "99%";
-        col1.style.width = "80%";
+        col1.style.width = "100%";
         col1.style.display = "inline-block";
-        var col2 = document.createElement('div');
-        col2.className="col3";
-        col2.id = "menu";
-        col2.style.display = "inline-block";
         mapDiv.parentNode.insertBefore(row, mapDiv);
         document.getElementById("all").appendChild(col1);
-        document.getElementById("all").appendChild(col2);
         col1.appendChild(mapDiv)
         var Filters = {"AZ_proc": "real"};
         function filterFunc() {
@@ -437,6 +444,7 @@
           })
         }
             document.getElementById("menu").appendChild(
+                // Object.assign(document.createElement('div'), { className: 'info' }));
                 document.createElement("div"));
             var div_AZ_proc = document.createElement("div");
             div_AZ_proc.id = "div_AZ_proc";
@@ -457,9 +465,9 @@
             var sel_AZ_proc = document.getElementById('div_AZ_proc');
             noUiSlider.create(sel_AZ_proc, {
                 connect: true,
-                start: [0.47, 39.27],
+                start: [0, 39.27],
                 range: {
-                min: 0.47,
+                min: 0,
                 max: 39.27
                 }
             });
