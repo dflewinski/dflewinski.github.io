@@ -179,7 +179,7 @@
                     </tr>\
                     <tr>\
                         <th scope="row">Wynik procentowy (%)</th>\
-                        <td>' + (feature.properties['AZ_proc'] !== null ? autolinker.link(String(feature.properties['AZ_proc']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                        <td>' + (feature.properties['AZ_proc'].toFixed(2) !== null ? autolinker.link(String(feature.properties['AZ_proc'].toFixed(2)).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
